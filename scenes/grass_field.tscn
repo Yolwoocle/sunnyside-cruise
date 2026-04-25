@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bvfi0a5pbt4f2"]
+
+[ext_resource type="Shader" uid="uid://djnny2q5n1uyk" path="res://scenes/grass_blade.gdshader" id="1_6gvgq"]
+[ext_resource type="Texture2D" uid="uid://bh3haiqkrdw4o" path="res://assets/grass_blade.png" id="1_upwcp"]
+[ext_resource type="Script" uid="uid://b1ugx3lwe78w2" path="res://scenes/multi_mesh_instance_2d.gd" id="2_h4vv2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6hef4"]
+shader = ExtResource("1_6gvgq")
+shader_parameter/palette = PackedColorArray(0.7254902, 0.8509804, 0.5568628, 1, 0.5686275, 0.8, 0.4, 1, 0.3882353, 0.7058824, 0.5058824, 1, 0.27058825, 0.6117647, 0.5058824, 1)
+shader_parameter/sway = 10.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_h4vv2"]
+center_offset = Vector3(0, 0.5, 0)
+
+[sub_resource type="MultiMesh" id="MultiMesh_32qfs"]
+use_colors = true
+custom_aabb = AABB(0, 0, 0, 50, 50, 0)
+mesh = SubResource("QuadMesh_h4vv2")
+
+[node name="Node2D" type="Node2D" unique_id=1817611032]
+
+[node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="." unique_id=155994956]
+material = SubResource("ShaderMaterial_6hef4")
+multimesh = SubResource("MultiMesh_32qfs")
+texture = ExtResource("1_upwcp")
+script = ExtResource("2_h4vv2")
+grass_palette = Array[Color]([Color(0.7254902, 0.8509804, 0.5568628, 1), Color(0.5686275, 0.8, 0.4, 1), Color(0.3882353, 0.7058824, 0.5058824, 1), Color(0.27058825, 0.6117647, 0.5058824, 1)])
+spawn_rect = Rect2(0, 0, 480, 270)
