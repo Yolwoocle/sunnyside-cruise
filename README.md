@@ -1,2 +1,3 @@
-# sunnyside-cruise
+# Sunnyside Cruise
+Work in progress prototype
 
