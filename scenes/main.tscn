@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c8lfwithmjpbp" path="res://assets/sunnyside_cruise_transp.png" id="2_0xm2m"]
 [ext_resource type="Shader" uid="uid://yrrho3flfa6x" path="res://scenes/clouds.gdshader" id="2_h2yge"]
 [ext_resource type="Shader" uid="uid://bi1bbm71cyjnu" path="res://scenes/iris.gdshader" id="3_1bvp3"]
+[ext_resource type="Shader" uid="uid://dqiofcq0gapcv" path="res://scenes/ertzetegsdf.gdshader" id="4_tefeu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0xm2m"]
 shader = ExtResource("1_ig7tw")
@@ -38,12 +39,43 @@ shader_parameter/noise_threshold = 0.035
 shader_parameter/noise_y_stretch = 0.405
 shader_parameter/detail_noise_scale = 1.4
 shader_parameter/detail_noise_weight = 0.115
+shader_parameter/worley_order = 2
 shader_parameter/worley_scale = 1.675
 shader_parameter/worley_weight = 0.095
 shader_parameter/cloud_shading_threshold = 0.67
 shader_parameter/light_direction = Vector3(-1, 2.16, 1.32)
+shader_parameter/overall_time_scale = 1.0
 shader_parameter/scroll_time_scale = 0.008
+shader_parameter/detail_scroll_time_scale = 0.03
+shader_parameter/worley_scroll_time_scale = 0.045
 shader_parameter/wave_time_scale = 0.004
+shader_parameter/time_offset = 100.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o6xl0"]
+shader = ExtResource("4_tefeu")
+shader_parameter/color_cloud = Color(1, 1, 1, 1)
+shader_parameter/color_shading = Color(0.8, 0.8, 0.8, 1)
+shader_parameter/color_back = Color(0.7, 0.7, 0.7, 1)
+shader_parameter/color_sky = Color(0, 1, 0.8, 1)
+shader_parameter/uv_stretch = Vector2(1, 1)
+shader_parameter/noise_octaves = 1
+shader_parameter/noise_scale = 0.315
+shader_parameter/noise_frequency = 3.0
+shader_parameter/noise_value = 0.0
+shader_parameter/noise_threshold = 0.035
+shader_parameter/noise_y_stretch = 1.0
+shader_parameter/detail_noise_scale = 1.4
+shader_parameter/detail_noise_weight = 0.1
+shader_parameter/worley_order = 3
+shader_parameter/worley_scale = 1.35
+shader_parameter/worley_weight = 0.07
+shader_parameter/cloud_shading_threshold = -0.1
+shader_parameter/light_direction = Vector3(1, 0, 1)
+shader_parameter/overall_time_scale = 1.0
+shader_parameter/scroll_time_scale = 0.015
+shader_parameter/detail_scroll_time_scale = 0.015
+shader_parameter/worley_scroll_time_scale = 0.015
+shader_parameter/wave_time_scale = 0.007
 shader_parameter/time_offset = 100.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lquwl"]
@@ -84,6 +116,19 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_bottom = -132.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Clouds2" type="ColorRect" parent="CanvasLayer/Control" unique_id=2009811170]
+material = SubResource("ShaderMaterial_o6xl0")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 754.0
+offset_top = 25.0
+offset_right = 754.0
+offset_bottom = -107.0
 grow_horizontal = 2
 grow_vertical = 2
 
