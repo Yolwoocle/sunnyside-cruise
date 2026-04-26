@@ -5,31 +5,31 @@ uniform vec4 color_shading : source_color = vec4(vec3(0.8), 1.0);
 uniform vec4 color_back : source_color = vec4(vec3(0.7), 1.0);
 uniform vec4 color_sky : source_color = vec4(vec3(0.0, 1.0, 0.8), 1.0);
 
-uniform vec2 uv_stretch = vec2(1.0);
+uniform vec2 uv_stretch = vec2(3.478, 1.0);
 
-uniform int noise_octaves = 1;
-uniform float noise_scale = 0.315;
+uniform int noise_octaves = 3;
+uniform float noise_scale = 0.215;
 uniform float noise_frequency = 3.0;
-uniform float noise_value = 0.0;
+uniform float noise_value = -0.52;
 //uniform float noise_threshold = 0.05;
 uniform float noise_threshold = 0.035;
-uniform float noise_y_stretch = 1.0;
+uniform float noise_y_stretch = 0.405;
 
 uniform float detail_noise_scale = 1.4;
-uniform float detail_noise_weight = 0.1;
+uniform float detail_noise_weight = 0.115;
 
-uniform int worley_order = 3;
-uniform float worley_scale = 1.35;
-uniform float worley_weight = 0.07;
+uniform int worley_order = 2;
+uniform float worley_scale = 1.675;
+uniform float worley_weight = 0.095;
 
-uniform float cloud_shading_threshold = -0.1;
+uniform float cloud_shading_threshold = 0.67;
 uniform vec3 light_direction = vec3(1.0, 0.0, 1.0);
 
 uniform float overall_time_scale = 1.0;
-uniform float scroll_time_scale = 0.015;
-uniform float detail_scroll_time_scale = 0.015;
-uniform float worley_scroll_time_scale = 0.015;
-uniform float wave_time_scale = 0.007;
+uniform float scroll_time_scale = 0.008;
+uniform float detail_scroll_time_scale = 0.03;
+uniform float worley_scroll_time_scale = 0.045;
+uniform float wave_time_scale = 0.004;
 
 uniform float time_offset = 100.0;
 
@@ -120,9 +120,9 @@ float worley(vec2 uv, float columns, float rows) {
 	return minimum_dist;
 }
 
-float cloud(vec2 str_uv) {
+float cloud(vec2 str_uv, float time_scale) {
 	float amplitude = 0.5;
-	float time = (TIME + time_offset) * overall_time_scale;
+	float time = (TIME + time_offset) * overall_time_scale * time_scale;
 	// A tad inneficient since we're using 3D noise
 	float wave_noise = fbm(
 		vec3(
@@ -168,11 +168,11 @@ float cloud(vec2 str_uv) {
 
 void fragment() {
 	vec2 str_uv = UV * uv_stretch;
-	float cloud1 = cloud(str_uv);
+	float cloud1 = cloud(str_uv, 1.0);
 	vec4 col;
 	
 	if (cloud1 < 0.0) {
-		float cloud2 = cloud(str_uv + vec2(400.0, 0.0));
+		float cloud2 = cloud(str_uv + vec2(400.0, 0.0), 0.5);
 		if (cloud2 < 0.0) {
 			col = color_sky;
 		} else {
@@ -181,10 +181,10 @@ void fragment() {
 
 	} else {
 		float d = 0.05;
-		float c_left   = cloud(str_uv + vec2(-d, 0.0));
-		float c_right  = cloud(str_uv + vec2( d, 0.0));
-		float c_up     = cloud(str_uv + vec2(0.0, -d));
-		float c_down   = cloud(str_uv + vec2(0.0,  d));
+		float c_left   = cloud(str_uv + vec2(-d, 0.0), 1.0);
+		float c_right  = cloud(str_uv + vec2( d, 0.0), 1.0);
+		float c_up     = cloud(str_uv + vec2(0.0, -d), 1.0);
+		float c_down   = cloud(str_uv + vec2(0.0,  d), 1.0);
 		
 		float dx = (c_right - c_left) / (d * 2.0);
 		float dy = (c_down - c_up) / (d * 2.0);

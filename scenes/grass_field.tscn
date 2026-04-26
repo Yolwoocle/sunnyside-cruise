@@ -3,26 +3,88 @@
 [ext_resource type="Shader" uid="uid://djnny2q5n1uyk" path="res://scenes/grass_blade.gdshader" id="1_6gvgq"]
 [ext_resource type="Texture2D" uid="uid://bh3haiqkrdw4o" path="res://assets/grass_blade.png" id="1_upwcp"]
 [ext_resource type="Script" uid="uid://b1ugx3lwe78w2" path="res://scenes/multi_mesh_instance_2d.gd" id="2_h4vv2"]
+[ext_resource type="Script" uid="uid://b317231sb82rw" path="res://resources/grass_variant_data.gd" id="4_6hef4"]
+[ext_resource type="Texture2D" uid="uid://c8lfwithmjpbp" path="res://assets/sunnyside_cruise_transp.png" id="4_32qfs"]
+
+[sub_resource type="Curve2D" id="Curve2D_32qfs"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 170.67743, 0, 0, 0, 0, 25, 175, 0, 0, 0, 0, 62, 181, 0, 0, 0, 0, 82, 185, 0, 0, 0, 0, 110, 188, 0, 0, 0, 0, 135, 188, 0, 0, 0, 0, 155, 188, 0, 0, 0, 0, 176, 188, 0, 0, 0, 0, 202, 191, 0, 0, 0, 0, 228, 191, 0, 0, 0, 0, 249, 194, 0, 0, 0, 0, 275, 199, 0, 0, 0, 0, 296, 201, 0, 0, 0, 0, 325, 209, 0, 0, 0, 0, 353, 210, 0, 0, 0, 0, 381, 211, 0, 0, 0, 0, 404, 215, 0, 0, 0, 0, 423, 218, 0, 0, 0, 0, 445, 219, 0, 0, 0, 0, 463, 220, 0, 0, 0, 0, 480, 221)
+}
+point_count = 21
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6hef4"]
 shader = ExtResource("1_6gvgq")
 shader_parameter/palette = PackedColorArray(0.7254902, 0.8509804, 0.5568628, 1, 0.5686275, 0.8, 0.4, 1, 0.3882353, 0.7058824, 0.5058824, 1, 0.27058825, 0.6117647, 0.5058824, 1)
-shader_parameter/sway = 10.0
+shader_parameter/variant_count = 2.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_h4vv2"]
 center_offset = Vector3(0, 0.5, 0)
 
 [sub_resource type="MultiMesh" id="MultiMesh_32qfs"]
 use_colors = true
+use_custom_data = true
 custom_aabb = AABB(0, 0, 0, 50, 50, 0)
 mesh = SubResource("QuadMesh_h4vv2")
 
-[node name="Node2D" type="Node2D" unique_id=1817611032]
+[sub_resource type="Resource" id="Resource_ftust"]
+script = ExtResource("4_6hef4")
+probability_weight = 600.0
+colored = true
+metadata/_custom_type_script = "uid://b317231sb82rw"
 
-[node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="." unique_id=155994956]
+[sub_resource type="Resource" id="Resource_3xgha"]
+script = ExtResource("4_6hef4")
+min_blade_width = 20.0
+max_blade_width = 26.0
+min_blade_height = 27.0
+max_blade_height = 52.5
+flippable = true
+metadata/_custom_type_script = "uid://b317231sb82rw"
+
+[sub_resource type="Resource" id="Resource_6hef4"]
+script = ExtResource("4_6hef4")
+min_blade_width = 9.0
+max_blade_width = 24.0
+min_blade_height = 27.0
+max_blade_height = 52.5
+flippable = true
+metadata/_custom_type_script = "uid://b317231sb82rw"
+
+[sub_resource type="Resource" id="Resource_v4vk1"]
+script = ExtResource("4_6hef4")
+min_blade_width = 9.0
+max_blade_width = 24.0
+min_blade_height = 27.0
+max_blade_height = 52.5
+flippable = true
+metadata/_custom_type_script = "uid://b317231sb82rw"
+
+[node name="GrassField" type="Node2D" unique_id=1817611032]
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1104266087]
+color = Color(0.5686275, 0.8, 0.4, 1)
+
+[node name="Path2D" type="Path2D" parent="." unique_id=698673794]
+position = Vector2(0, -36.50002)
+scale = Vector2(1, 1.1923077)
+curve = SubResource("Curve2D_32qfs")
+
+[node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="." unique_id=155994956 node_paths=PackedStringArray("spawn_curve", "spawn_polygon")]
 material = SubResource("ShaderMaterial_6hef4")
 multimesh = SubResource("MultiMesh_32qfs")
 texture = ExtResource("1_upwcp")
 script = ExtResource("2_h4vv2")
 grass_palette = Array[Color]([Color(0.7254902, 0.8509804, 0.5568628, 1), Color(0.5686275, 0.8, 0.4, 1), Color(0.3882353, 0.7058824, 0.5058824, 1), Color(0.27058825, 0.6117647, 0.5058824, 1)])
-spawn_rect = Rect2(0, 0, 480, 270)
+spawn_curve = NodePath("../Path2D")
+spawn_polygon = NodePath("../Polygon2D")
+variant_information = Array[ExtResource("4_6hef4")]([SubResource("Resource_ftust"), SubResource("Resource_3xgha"), SubResource("Resource_6hef4"), SubResource("Resource_v4vk1")])
+color_gradient_range = 140.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1083539532]
+visible = false
+custom_minimum_size = Vector2(480, 270)
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("4_32qfs")
+expand_mode = 2
+metadata/_edit_lock_ = true
