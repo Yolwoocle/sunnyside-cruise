@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cw6n4ymqu24r3"]
+
+[ext_resource type="PackedScene" uid="uid://dq2owi4hj8os7" path="res://scenes/bike.tscn" id="2_vy082"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jlxis"]
+
+[node name="Node2D" type="Node2D" unique_id=1077892294]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1261632521]
+position = Vector2(333, 278)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=1670900232]
+polygon = PackedVector2Array(-2, 0, 77, -9, 111, -24, 151, -50, 165, -88, 175, -136, 165, -172, 145, -211, 113, -235, 55, -249, 16, -253, -41, -256, -84, -246, -138, -217, -167, -170, -222, -317, 126, -361, 294, -290, 335, 0, 87, 68, -6, 61)
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=416249100]
+position = Vector2(333, 278)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4" unique_id=1784183278]
+shape = SubResource("WorldBoundaryShape2D_jlxis")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=300957664]
+position = Vector2(21, 193)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1193703048]
+shape = SubResource("WorldBoundaryShape2D_jlxis")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=955052088]
+position = Vector2(617, 190)
+rotation = -1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3" unique_id=1131037845]
+shape = SubResource("WorldBoundaryShape2D_jlxis")
+
+[node name="Bike" parent="." unique_id=949065327 instance=ExtResource("2_vy082")]
+position = Vector2(171, 241)
+advance_force = 5000
