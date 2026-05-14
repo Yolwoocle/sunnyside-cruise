@@ -3,6 +3,11 @@ shader_type canvas_item;
 uniform vec4 palette[4] : source_color;
 uniform vec4 highlight_color: source_color;
 
+uniform float scroll = 0.0;
+uniform vec2 uv_scale = vec2(1.0);
+uniform float min_uv_perspective = 1.0;
+uniform float max_uv_perspective = 2.0;
+
 uniform float wave_scale = 0.6;
 uniform int noise_octaves = 3;
 uniform float noise_scale = 10.0;
@@ -72,14 +77,19 @@ void vertex() {
 
 void fragment() {
 	// Called for every pixel the material is visible on.
+	vec2 new_uv = uv_scale * (UV + vec2(-0.5, 0.0));
+	float z = map(UV.y, 0.0, 1.0, min_uv_perspective, max_uv_perspective);
+	new_uv /= z;
+	
+	vec2 scroll_vec = vec2(scroll, 0.0);
 	
 	// Gradient
-	float gradient = map(UV.y, 0.0, 1.0, 1.0, 0.0);
+	float gradient = map(new_uv.y, 0.0, 1.0, 1.0, 0.0);
 	
 	// Noise 
 	float amplitude = 0.5;
 	float wave_noise = fbm(
-		vec3(UV * noise_scale, TIME*wave_time_scale),
+		vec3(new_uv * noise_scale + scroll_vec, TIME*wave_time_scale),
 		noise_octaves, amplitude, noise_frequency, noise_value
 	);
 	wave_noise = map(wave_noise, 0.0, 1.0, -wave_scale, wave_scale);
@@ -92,7 +102,7 @@ void fragment() {
 	
 	// Highlights
 	float highlight_noise = fbm(
-		vec3((UV + vec2(2.0)) * highlight_noise_scale, TIME*highlight_time_scale),
+		vec3((new_uv + vec2(20.0)) * highlight_noise_scale + scroll_vec, TIME*highlight_time_scale),
 		highlight_noise_octaves, 
 		amplitude, 
 		highlight_noise_frequency, 

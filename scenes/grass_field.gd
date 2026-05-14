@@ -4,21 +4,28 @@ extends Node2D
 
 @export var grass_palette: Array[Color]
 
-@export_category("Spawn params")
-@export var max_spawn_attempts: int = 10
-@export var polygon_bottom_padding: float = 32
-
-@export_category("Grass variants")
-@export var variant_information: Array[GrassVariantData]
+@export_category("Terrain params")
+@export var terrain_step = 16.0
+@export var terrain_noise_scale = 0.01
+@export var terrain_base_height = 200.0
+@export var terrain_height_scale = 200.0
+@export var terrain_offset = 0.0
 
 @export_category("Grass params")
-@export var grass_count := 3000
+@export var grass_count := 6000
 @export var min_blade_sway := 10.0
 @export var max_blade_sway := 16.0
 @export var min_blade_sway_speed := 5.0
 @export var max_blade_sway_speed := 8.0
 @export var color_gradient_spread = 1.0
 @export var color_gradient_range = 100.0
+
+@export_category("Grass variants")
+@export var variant_information: Array[GrassVariantData]
+
+@export_category("Grass spawn params")
+@export var max_spawn_attempts: int = 10
+@export var polygon_bottom_padding: float = 32
 
 
 @onready var spawn_curve: Path2D = $Path2D
@@ -31,11 +38,25 @@ var _rng = RandomNumberGenerator.new()
 var _top_edge: Curve
 var _weight_sum: float = 0.0
 
+var _terrain_noise := FastNoiseLite.new() 
+
 func _ready():
 	assert(spawn_polygon != null)
 	
-	# Top edge
-	var polygon = _generate_polygon_from_curve()
+	generate()
+
+func generate() -> void:
+	var multimesh = MultiMesh.new()
+	multimesh.use_colors = multimesh_instance.multimesh.use_colors
+	multimesh.use_custom_data = multimesh_instance.multimesh.use_custom_data
+	multimesh.mesh = multimesh_instance.multimesh.mesh
+	multimesh_instance.multimesh = multimesh
+	
+	_terrain_noise.seed = 0#randi()
+	_terrain_noise.noise_type = FastNoiseLite.TYPE_PERLIN
+	_terrain_noise.frequency = 0.05
+	
+	var polygon = _generate_polygon()
 	spawn_polygon.polygon = polygon
 	collision_polygon.polygon = polygon
 	
@@ -50,15 +71,22 @@ func _ready():
 	shader_material.set_shader_parameter("palette", PackedColorArray(grass_palette))
 	shader_material.set_shader_parameter("variant_count", len(variant_information))
 	
-	generate()
+	generate_grass()
 
-func _generate_polygon_from_curve() -> PackedVector2Array:
+
+func _generate_polygon() -> PackedVector2Array:
 	var polygon = PackedVector2Array()
-	for p in spawn_curve.curve.point_count:
-		var pos = spawn_curve.curve.get_point_position(p)
-		polygon.append(pos)
-	
 	var size = get_viewport_rect().size
+	spawn_curve.curve.clear_points()
+	
+	for ix in range(0, size.x + terrain_step, terrain_step):
+		var x = ix
+		var noise = _terrain_noise.get_noise_1d((terrain_offset + x) * terrain_noise_scale)
+		var point = Vector2(x, terrain_base_height + noise * terrain_height_scale)
+		polygon.append(point)
+		spawn_curve.curve.add_point(point)
+	
+	
 	polygon.append(Vector2(size.x, size.y + polygon_bottom_padding))
 	polygon.append(Vector2(0, size.y + polygon_bottom_padding))
 	
@@ -169,7 +197,7 @@ func _generate_blade(instance_index: int, pos: Vector2):
 	#todo color_gradient_spread
 
 
-func generate():
+func generate_grass():
 	multimesh_instance.multimesh.instance_count = grass_count
 	
 	var blade_positions = _get_spawn_positions()

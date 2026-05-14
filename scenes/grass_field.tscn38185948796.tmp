@@ -8,10 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_pqoj2"]
 script = ExtResource("4_6hef4")
-probability_weight = 1600.0
-max_blade_width = 10.0
-min_blade_height = 10.0
-max_blade_height = 26.0
+probability_weight = 600.0
 colored = true
 metadata/_custom_type_script = "uid://b317231sb82rw"
 
@@ -42,16 +39,11 @@ max_blade_height = 52.5
 flippable = true
 metadata/_custom_type_script = "uid://b317231sb82rw"
 
-[sub_resource type="Resource" id="Resource_6hef4"]
-script = ExtResource("4_6hef4")
-min_blade_width = 20.0
-max_blade_width = 26.0
-min_blade_height = 27.0
-max_blade_height = 52.5
-flippable = true
-metadata/_custom_type_script = "uid://b317231sb82rw"
-
 [sub_resource type="Curve2D" id="Curve2D_6hef4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 252, 0, 0, 0, 0, 36, 269, 0, 0, 0, 0, 80, 276, 0, 0, 0, 0, 137, 287, 0, 0, 0, 0, 184, 291, 0, 0, 0, 0, 220, 296, 0, 0, 0, 0, 270, 299, 0, 0, 0, 0, 340, 301, 0, 0, 0, 0, 378, 293, 0, 0, 0, 0, 427, 283, 0, 0, 0, 0, 465, 273, 0, 0, 0, 0, 516, 263, 0, 0, 0, 0, 579, 262, 0, 0, 0, 0, 622, 268, 0, 0, 0, 0, 640, 276)
+}
+point_count = 15
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6hef4"]
 shader = ExtResource("1_6gvgq")
@@ -70,9 +62,9 @@ mesh = SubResource("QuadMesh_h4vv2")
 [node name="GrassField" type="Node2D" unique_id=1817611032]
 script = ExtResource("1_ftust")
 grass_palette = Array[Color]([Color(0.7254902, 0.8509804, 0.5568628, 1), Color(0.5686275, 0.8, 0.4, 1), Color(0.3882353, 0.7058824, 0.5058824, 1), Color(0.27058825, 0.6117647, 0.5058824, 1)])
-grass_count = 12000
+variant_information = Array[ExtResource("4_6hef4")]([SubResource("Resource_pqoj2"), SubResource("Resource_xy7tx"), SubResource("Resource_rupvl"), SubResource("Resource_6sxno")])
+grass_count = 6000
 color_gradient_range = 150.0
-variant_information = Array[ExtResource("4_6hef4")]([SubResource("Resource_pqoj2"), SubResource("Resource_xy7tx"), SubResource("Resource_rupvl"), SubResource("Resource_6sxno"), SubResource("Resource_6hef4")])
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=1104266087]
 color = Color(0.5686275, 0.8, 0.4, 1)

@@ -1,11 +1,10 @@
 [gd_scene format=3 uid="uid://dq2owi4hj8os7"]
 
-[ext_resource type="Texture2D" uid="uid://c8lfwithmjpbp" path="res://assets/sunnyside_cruise_transp.png" id="1_77r6i"]
 [ext_resource type="Script" uid="uid://cy1ghnqw463f5" path="res://scenes/bike.gd" id="1_fdhfo"]
 [ext_resource type="Texture2D" uid="uid://y06eyjbcidy4" path="res://assets/wheel.png" id="2_fdhfo"]
 [ext_resource type="Texture2D" uid="uid://bosy7xu50nt7f" path="res://assets/bike_body.png" id="3_juvdb"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_77r6i"]
+[ext_resource type="Texture2D" uid="uid://bhhgjosa0onhg" path="res://assets/bunny.png" id="4_bqlqk"]
+[ext_resource type="Texture2D" uid="uid://cmgl0rh02tl3u" path="res://assets/bunny_back.png" id="5_4lfrf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fdhfo"]
 radius = 13.038404
@@ -15,33 +14,15 @@ size = Vector2(39, 4)
 
 [node name="Bike" type="Node2D" unique_id=949065327]
 script = ExtResource("1_fdhfo")
-advance_force = 600
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1700284066]
-visible = false
-custom_minimum_size = Vector2(480, 270)
-offset_left = -78.0
-offset_top = -172.0
-offset_right = 402.0
-offset_bottom = 98.0
-texture = ExtResource("1_77r6i")
-expand_mode = 2
-
-[node name="PinJoint2D" type="PinJoint2D" parent="." unique_id=1514180788]
+[node name="BackJoint" type="PinJoint2D" parent="." unique_id=1514180788]
 node_a = NodePath("../BackWheel")
 node_b = NodePath("../BikeBody")
 
-[node name="PinJoint2D2" type="PinJoint2D" parent="." unique_id=1291538765]
+[node name="FrontJoint" type="PinJoint2D" parent="." unique_id=1291538765]
 position = Vector2(35, 0)
 node_a = NodePath("../FrontWheel")
 node_b = NodePath("../BikeBody")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=17049282]
-collision_layer = 0
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1875032053]
-shape = SubResource("RectangleShape2D_77r6i")
 
 [node name="BackWheel" type="RigidBody2D" parent="." unique_id=1431791332]
 collision_layer = 2
@@ -73,6 +54,17 @@ mass = 0.1
 position = Vector2(0, -7)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_juvdb")
+
+[node name="BunnyFront" type="Sprite2D" parent="BikeBody" unique_id=590992418]
+position = Vector2(-3.8600311, -31.826298)
+rotation = -0.12566371
+texture = ExtResource("4_bqlqk")
+
+[node name="BunnyBack" type="Sprite2D" parent="BikeBody" unique_id=1929388778]
+z_index = -1
+position = Vector2(-3.8600311, -31.826298)
+rotation = -0.12566371
+texture = ExtResource("5_4lfrf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BikeBody" unique_id=1123936899]
 position = Vector2(-0.5, 0)

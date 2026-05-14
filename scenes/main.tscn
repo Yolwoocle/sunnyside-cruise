@@ -1,25 +1,30 @@
 [gd_scene format=3 uid="uid://fcwaxbtl0nqu"]
 
 [ext_resource type="Shader" uid="uid://b33n3c3ts8b7q" path="res://scenes/water.gdshader" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://dli6lx0bw4non" path="res://scenes/control.gd" id="1_lquwl"]
+[ext_resource type="Script" uid="uid://df1kywp84318e" path="res://scenes/main.gd" id="1_tipki"]
 [ext_resource type="Texture2D" uid="uid://c8lfwithmjpbp" path="res://assets/sunnyside_cruise_transp.png" id="2_0xm2m"]
 [ext_resource type="Shader" uid="uid://yrrho3flfa6x" path="res://scenes/clouds.gdshader" id="2_h2yge"]
 [ext_resource type="Shader" uid="uid://bi1bbm71cyjnu" path="res://scenes/iris.gdshader" id="3_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://bvfi0a5pbt4f2" path="res://scenes/grass_field.tscn" id="6_tefeu"]
+[ext_resource type="Script" uid="uid://bwm5wc7wqs7cl" path="res://scenes/grass_fields.gd" id="6_tipki"]
 [ext_resource type="PackedScene" uid="uid://dq2owi4hj8os7" path="res://scenes/bike.tscn" id="7_o6xl0"]
+[ext_resource type="Script" uid="uid://bx64j4nkk1lo8" path="res://scenes/camera_2d.gd" id="8_tipki"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0xm2m"]
 shader = ExtResource("1_ig7tw")
 shader_parameter/palette = PackedColorArray(0.14117648, 0.37254903, 0.54901963, 1, 0.22352941, 0.5019608, 0.7411765, 1, 0.29803923, 0.64705884, 0.7764706, 1, 0.3647059, 0.76862746, 0.80784315, 1)
 shader_parameter/highlight_color = Color(0.6509804, 0.9490196, 0.94509804, 1)
+shader_parameter/scroll = 0.0
+shader_parameter/uv_scale = Vector2(1, 1.555)
+shader_parameter/min_uv_perspective = 0.785
+shader_parameter/max_uv_perspective = 1.25
 shader_parameter/wave_scale = 0.6
 shader_parameter/noise_octaves = 3
-shader_parameter/noise_scale = 13.333
+shader_parameter/noise_scale = 10.0
 shader_parameter/noise_frequency = 3.0
 shader_parameter/noise_value = -0.03
 shader_parameter/wave_time_scale = 0.1
 shader_parameter/highlight_noise_octaves = 3
-shader_parameter/highlight_noise_scale = 13.333
+shader_parameter/highlight_noise_scale = 10.0
 shader_parameter/highlight_noise_frequency = 3.0
 shader_parameter/highlight_noise_value = 0.0
 shader_parameter/highlight_threshold = 0.665
@@ -60,58 +65,57 @@ shader_parameter/radius = 0.0
 shader_parameter/color = Color(0.07529581, 0.119265474, 0.14576113, 1)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tefeu"]
+distance = 8.0
 
 [node name="Main" type="Node2D" unique_id=564196575]
+script = ExtResource("1_tipki")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1148498630]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=532694051]
+anchor_mode = 0
+script = ExtResource("8_tipki")
 
-[node name="Control" type="Control" parent="CanvasLayer" unique_id=1293523577]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_lquwl")
-
-[node name="Water" type="ColorRect" parent="CanvasLayer/Control" unique_id=2022183565]
+[node name="Water" type="ColorRect" parent="Camera2D" unique_id=2022183565]
+z_index = -20
 material = SubResource("ShaderMaterial_0xm2m")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 188.0
-offset_bottom = -2.0
-grow_horizontal = 2
-grow_vertical = 2
+custom_minimum_size = Vector2(480, 22.97)
+offset_top = 129.0
+offset_right = 480.0
+offset_bottom = 270.0
 
-[node name="Clouds" type="ColorRect" parent="CanvasLayer/Control" unique_id=1641650351]
+[node name="Clouds" type="ColorRect" parent="Camera2D" unique_id=1641650351]
+z_index = -20
 material = SubResource("ShaderMaterial_1bvp3")
-layout_mode = 1
+custom_minimum_size = Vector2(480, 40)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -172.0
+offset_right = 480.0
+offset_bottom = 129.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control" unique_id=1212673968]
+[node name="Label" type="Label" parent="Camera2D" unique_id=1710734963]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1212673968]
 visible = false
 custom_minimum_size = Vector2(480, 270)
-layout_mode = 0
 offset_right = 480.0
 offset_bottom = 270.0
 texture = ExtResource("2_0xm2m")
 expand_mode = 2
 
-[node name="Bike" parent="CanvasLayer/Control" unique_id=949065327 instance=ExtResource("7_o6xl0")]
-position = Vector2(52, 46)
+[node name="Bike" parent="." unique_id=949065327 instance=ExtResource("7_o6xl0")]
+position = Vector2(20, 22)
+advance_force = 400
 
-[node name="GrassField" parent="CanvasLayer/Control" unique_id=1817611032 instance=ExtResource("6_tefeu")]
+[node name="GrassFields" type="Node2D" parent="." unique_id=777197843]
+script = ExtResource("6_tipki")
 
-[node name="Iris" type="ColorRect" parent="CanvasLayer/Control" unique_id=2012503930]
+[node name="Iris" type="ColorRect" parent="." unique_id=2012503930]
+visible = false
 material = SubResource("ShaderMaterial_lquwl")
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -122,18 +126,12 @@ grow_vertical = 2
 position = Vector2(333, 360)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4" unique_id=1123136681]
+position = Vector2(-91, -70)
 shape = SubResource("WorldBoundaryShape2D_tefeu")
 
 [node name="StaticBody2D5" type="StaticBody2D" parent="." unique_id=82860279]
-position = Vector2(0, 186)
+position = Vector2(-9, 161)
 rotation = 1.5707964
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5" unique_id=2039328548]
-shape = SubResource("WorldBoundaryShape2D_tefeu")
-
-[node name="StaticBody2D6" type="StaticBody2D" parent="." unique_id=1969744772]
-position = Vector2(640, 186)
-rotation = 4.712389
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6" unique_id=1609922528]
 shape = SubResource("WorldBoundaryShape2D_tefeu")
