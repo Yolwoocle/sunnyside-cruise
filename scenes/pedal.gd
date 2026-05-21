@@ -1,11 +1,13 @@
 extends Node2D
 
-var pedal_length = 7.0
+var pedal_length = 5.0
 var pedal_rotation = 0.0
 var pedal_rotation_speed = 0.0
 var pedal_rotation_deceleration = 3.0
+var pedal_thickness_offset = 2.0
 
-@export var pedal_head_front: AnimatableBody2D
+@export var pedal_head_front_body: AnimatableBody2D
+@export var pedal_head_back_body: AnimatableBody2D
 
 func add_pedal_rotation(angle: float) -> void:
 	set_pedal_rotation(pedal_rotation + angle)
@@ -26,4 +28,5 @@ func _physics_process(delta: float) -> void:
 	add_pedal_rotation(pedal_rotation_speed * delta)
 	
 	pedal_rotation_speed = move_toward(pedal_rotation_speed, 0.0, delta * pedal_rotation_deceleration)
-	pedal_head_front.global_position = $PedalHeadFront.global_position
+	pedal_head_front_body.global_position = $PedalHeadFront.global_position + Vector2.UP * pedal_thickness_offset
+	pedal_head_back_body.global_position = $PedalHeadBack.global_position + Vector2.UP * pedal_thickness_offset

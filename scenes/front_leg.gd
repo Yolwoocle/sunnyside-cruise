@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var leg_length = 10
+
 @onready var leg: Line2D = $LegFrontLine2D
 
 func _ready() -> void:
@@ -10,5 +12,13 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	leg.global_position = Vector2.ZERO
 	leg.set_point_position(0, $FrontLegBase.global_position)
-	leg.set_point_position(1, $PedalHeadFront.global_position)
-	leg.set_point_position(2, $PedalHeadFront.global_position)
+	
+	var coll_shape_1 = $LegFront/CollisionShape2D.shape as CapsuleShape2D
+	leg.set_point_position(1, $LegFront.global_transform * (Vector2.UP * coll_shape_1.height * 0.5))
+	
+	var coll_shape_2 = $LegFront/CollisionShape2D.shape as CapsuleShape2D
+	leg.set_point_position(2, $KneeFront.global_transform * (Vector2.DOWN * coll_shape_2.height * 0.5))
+	
+	print(leg.get_point_position(0).distance_to(leg.get_point_position(1)))
+	print(leg.get_point_position(1).distance_to(leg.get_point_position(2)))
+	print("---")
