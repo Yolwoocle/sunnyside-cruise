@@ -70,7 +70,6 @@ mesh = SubResource("QuadMesh_h4vv2")
 [node name="GrassField" type="Node2D" unique_id=1817611032]
 script = ExtResource("1_ftust")
 grass_palette = Array[Color]([Color(0.7254902, 0.8509804, 0.5568628, 1), Color(0.5686275, 0.8, 0.4, 1), Color(0.3882353, 0.7058824, 0.5058824, 1), Color(0.27058825, 0.6117647, 0.5058824, 1)])
-grass_count = 12000
 color_gradient_range = 150.0
 variant_information = Array[ExtResource("4_6hef4")]([SubResource("Resource_pqoj2"), SubResource("Resource_xy7tx"), SubResource("Resource_rupvl"), SubResource("Resource_6sxno"), SubResource("Resource_6hef4")])
 

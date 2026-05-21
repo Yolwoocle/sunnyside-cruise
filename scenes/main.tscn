@@ -15,8 +15,8 @@ shader_parameter/palette = PackedColorArray(0.14117648, 0.37254903, 0.54901963, 
 shader_parameter/highlight_color = Color(0.6509804, 0.9490196, 0.94509804, 1)
 shader_parameter/scroll = 0.0
 shader_parameter/uv_scale = Vector2(1, 1.555)
-shader_parameter/min_uv_perspective = 0.785
-shader_parameter/max_uv_perspective = 1.25
+shader_parameter/min_uv_perspective = 0.715
+shader_parameter/max_uv_perspective = 1.44
 shader_parameter/wave_scale = 0.6
 shader_parameter/noise_octaves = 3
 shader_parameter/noise_scale = 10.0
@@ -27,11 +27,12 @@ shader_parameter/highlight_noise_octaves = 3
 shader_parameter/highlight_noise_scale = 10.0
 shader_parameter/highlight_noise_frequency = 3.0
 shader_parameter/highlight_noise_value = 0.0
-shader_parameter/highlight_threshold = 0.665
+shader_parameter/highlight_threshold = 0.71
 shader_parameter/highlight_time_scale = 0.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
 shader = ExtResource("2_h2yge")
+shader_parameter/scroll = 0.0
 shader_parameter/color_cloud = Color(0.8627451, 1, 0.972549, 1)
 shader_parameter/color_shading = Color(0.6509804, 0.9490196, 0.94509804, 1)
 shader_parameter/color_back = Color(0.32712558, 0.7358987, 0.8758416, 1)
@@ -56,6 +57,9 @@ shader_parameter/detail_scroll_time_scale = 0.03
 shader_parameter/worley_scroll_time_scale = 0.045
 shader_parameter/wave_time_scale = 0.004
 shader_parameter/time_offset = 100.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_tipki"]
+font_size = 10
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lquwl"]
 shader = ExtResource("3_1bvp3")
@@ -97,6 +101,7 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="Camera2D" unique_id=1710734963]
 offset_right = 40.0
 offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_tipki")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1212673968]
 visible = false
@@ -114,7 +119,6 @@ advance_force = 400
 script = ExtResource("6_tipki")
 
 [node name="Iris" type="ColorRect" parent="." unique_id=2012503930]
-visible = false
 material = SubResource("ShaderMaterial_lquwl")
 anchors_preset = 15
 anchor_right = 1.0

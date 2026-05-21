@@ -10,6 +10,7 @@ extends Node2D
 @export var terrain_base_height = 200.0
 @export var terrain_height_scale = 200.0
 @export var terrain_offset = 0.0
+@export var terrain_seed = -1
 
 @export_category("Grass params")
 @export var grass_count := 6000
@@ -52,7 +53,10 @@ func generate() -> void:
 	multimesh.mesh = multimesh_instance.multimesh.mesh
 	multimesh_instance.multimesh = multimesh
 	
-	_terrain_noise.seed = 0#randi()
+	if terrain_seed == -1:
+		_terrain_noise.seed = randi()
+	else:
+		_terrain_noise.seed = terrain_seed
 	_terrain_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	_terrain_noise.frequency = 0.05
 	
@@ -193,8 +197,6 @@ func _generate_blade(instance_index: int, pos: Vector2):
 			palette_index # palette color index
 		)
 	)
-	
-	#todo color_gradient_spread
 
 
 func generate_grass():
@@ -205,7 +207,7 @@ func generate_grass():
 	for i in len(blade_positions):
 		var pos = floor(blade_positions[i])
 		_generate_blade(i, pos)
-
-func _input(event):
-	if event.is_action_pressed("ui_accept"):
-		generate()
+#
+#func _input(event):
+	#if event.is_action_pressed("ui_accept"):
+		#generate()

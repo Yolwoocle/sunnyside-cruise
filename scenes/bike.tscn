@@ -2,9 +2,26 @@
 
 [ext_resource type="Script" uid="uid://cy1ghnqw463f5" path="res://scenes/bike.gd" id="1_fdhfo"]
 [ext_resource type="Texture2D" uid="uid://y06eyjbcidy4" path="res://assets/wheel.png" id="2_fdhfo"]
+[ext_resource type="Script" uid="uid://bpiwwqpspfi1w" path="res://scenes/front_leg.gd" id="2_irgsv"]
 [ext_resource type="Texture2D" uid="uid://bosy7xu50nt7f" path="res://assets/bike_body.png" id="3_juvdb"]
 [ext_resource type="Texture2D" uid="uid://bhhgjosa0onhg" path="res://assets/bunny.png" id="4_bqlqk"]
+[ext_resource type="Script" uid="uid://ct0dwk5gqrq3t" path="res://scenes/bike_body.gd" id="4_o7eds"]
 [ext_resource type="Texture2D" uid="uid://cmgl0rh02tl3u" path="res://assets/bunny_back.png" id="5_4lfrf"]
+[ext_resource type="Texture2D" uid="uid://b17vr5l22vek6" path="res://assets/pedal_arm.png" id="6_4lfrf"]
+[ext_resource type="Script" uid="uid://dogfjv372d0s4" path="res://scenes/pedal.gd" id="6_yvj5b"]
+[ext_resource type="Texture2D" uid="uid://bxht3d3dytx0l" path="res://icon.svg" id="7_d1jr7"]
+[ext_resource type="Texture2D" uid="uid://2m2unjv45uyt" path="res://assets/pedal_head.png" id="8_7nrme"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d1jr7"]
+radius = 1.0
+height = 14.000004
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_irgsv"]
+size = Vector2(2, 2)
+
+[sub_resource type="Curve" id="Curve_o7eds"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.6254122), -0.8985057, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fdhfo"]
 radius = 13.038404
@@ -15,14 +32,93 @@ size = Vector2(39, 4)
 [node name="Bike" type="Node2D" unique_id=949065327]
 script = ExtResource("1_fdhfo")
 
-[node name="BackJoint" type="PinJoint2D" parent="." unique_id=1514180788]
+[node name="WheelBackJoint" type="PinJoint2D" parent="." unique_id=1514180788]
+visible = false
 node_a = NodePath("../BackWheel")
 node_b = NodePath("../BikeBody")
 
-[node name="FrontJoint" type="PinJoint2D" parent="." unique_id=1291538765]
+[node name="WheelFrontJoint" type="PinJoint2D" parent="." unique_id=1291538765]
+visible = false
 position = Vector2(35, 0)
 node_a = NodePath("../FrontWheel")
 node_b = NodePath("../BikeBody")
+
+[node name="FrontLeg" type="Node2D" parent="." unique_id=806946141]
+script = ExtResource("2_irgsv")
+
+[node name="FeetFrontJoint" type="PinJoint2D" parent="FrontLeg" unique_id=1508885261]
+position = Vector2(23, -4)
+node_a = NodePath("../PedalHeadFront")
+node_b = NodePath("../KneeFront")
+
+[node name="LegFrontJoint" type="PinJoint2D" parent="FrontLeg" unique_id=1568450020]
+position = Vector2(23, -18)
+node_a = NodePath("../LegFront")
+node_b = NodePath("../KneeFront")
+
+[node name="HipFrontJoint" type="PinJoint2D" parent="FrontLeg" unique_id=1666051617]
+position = Vector2(9, -18)
+node_a = NodePath("../LegFront")
+node_b = NodePath("../FrontLegBase")
+
+[node name="KneeFront" type="RigidBody2D" parent="FrontLeg" unique_id=1363550154]
+position = Vector2(23, -11)
+collision_layer = 0
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="FrontLeg/KneeFront" unique_id=241015660]
+z_index = 1
+position = Vector2(-4.7683716e-07, -0.5000002)
+scale = Vector2(0.031249985, 0.10156251)
+texture = ExtResource("7_d1jr7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FrontLeg/KneeFront" unique_id=238125679]
+z_index = 1
+scale = Vector2(1, 0.99999994)
+shape = SubResource("CapsuleShape2D_d1jr7")
+
+[node name="LegFront" type="RigidBody2D" parent="FrontLeg" unique_id=840553832]
+position = Vector2(16, -18)
+rotation = 1.5707964
+collision_layer = 0
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="FrontLeg/LegFront" unique_id=515204544]
+z_index = 1
+position = Vector2(0, 0.092434525)
+scale = Vector2(0.033411272, 0.10773371)
+texture = ExtResource("7_d1jr7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FrontLeg/LegFront" unique_id=1341730367]
+z_index = 1
+scale = Vector2(1, 0.99999994)
+shape = SubResource("CapsuleShape2D_d1jr7")
+
+[node name="PedalHeadFront" type="AnimatableBody2D" parent="FrontLeg" unique_id=750572494]
+position = Vector2(23, -4)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="FrontLeg/PedalHeadFront" unique_id=178209630]
+z_index = 1
+shape = SubResource("RectangleShape2D_irgsv")
+
+[node name="FrontLegBase" type="AnimatableBody2D" parent="FrontLeg" unique_id=420093699]
+position = Vector2(9, -18)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="FrontLeg/FrontLegBase" unique_id=982204169]
+shape = SubResource("RectangleShape2D_irgsv")
+
+[node name="LegFrontLine2D" type="Line2D" parent="FrontLeg" unique_id=812048684]
+z_index = 1
+points = PackedVector2Array(8, -17, 15, -14, 18, -7)
+width_curve = SubResource("Curve_o7eds")
+default_color = Color(0.9411765, 0.9764706, 1, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="BackWheel" type="RigidBody2D" parent="." unique_id=1431791332]
 collision_layer = 2
@@ -45,27 +141,64 @@ texture = ExtResource("2_fdhfo")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FrontWheel" unique_id=624261698]
 shape = SubResource("CircleShape2D_fdhfo")
 
-[node name="BikeBody" type="RigidBody2D" parent="." unique_id=1234806738]
+[node name="BikeBody" type="RigidBody2D" parent="." unique_id=1234806738 node_paths=PackedStringArray("front_leg_base")]
 position = Vector2(18, 0)
 collision_layer = 0
 mass = 0.1
+script = ExtResource("4_o7eds")
+front_leg_base = NodePath("../FrontLeg/FrontLegBase")
 
-[node name="Sprite2D" type="Sprite2D" parent="BikeBody" unique_id=1710412909]
+[node name="LegBaseMarker" type="Marker2D" parent="BikeBody" unique_id=467126143]
+position = Vector2(-10, -17)
+
+[node name="BikeBody" type="Sprite2D" parent="BikeBody" unique_id=1710412909]
 position = Vector2(0, -7)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_juvdb")
 
 [node name="BunnyFront" type="Sprite2D" parent="BikeBody" unique_id=590992418]
 position = Vector2(-3.8600311, -31.826298)
-rotation = -0.12566371
+rotation = -0.12217305
 texture = ExtResource("4_bqlqk")
 
 [node name="BunnyBack" type="Sprite2D" parent="BikeBody" unique_id=1929388778]
+visible = false
 z_index = -1
 position = Vector2(-3.8600311, -31.826298)
-rotation = -0.12566371
+rotation = -0.12217305
 texture = ExtResource("5_4lfrf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BikeBody" unique_id=1123936899]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_bqlqk")
+
+[node name="Pedal" type="Node2D" parent="BikeBody" unique_id=2113288818 node_paths=PackedStringArray("pedal_head_front")]
+position = Vector2(0, -2)
+script = ExtResource("6_yvj5b")
+pedal_head_front = NodePath("../../FrontLeg/PedalHeadFront")
+
+[node name="PedalHeadFront" type="Sprite2D" parent="BikeBody/Pedal" unique_id=662888492]
+z_index = 1
+position = Vector2(6, 0)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("8_7nrme")
+
+[node name="PedalFront" type="Sprite2D" parent="BikeBody/Pedal" unique_id=859810435]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("6_4lfrf")
+centered = false
+offset = Vector2(-4, -4)
+
+[node name="PedalBack" type="Sprite2D" parent="BikeBody/Pedal" unique_id=1530078134]
+z_index = -1
+rotation = -3.1415927
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("6_4lfrf")
+centered = false
+offset = Vector2(-4, -4)
+
+[node name="PedalHeadBack" type="Sprite2D" parent="BikeBody/Pedal" unique_id=145177960]
+z_index = -2
+position = Vector2(-6, 0)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("8_7nrme")

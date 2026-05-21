@@ -1,5 +1,7 @@
 shader_type canvas_item;
 
+uniform float scroll = 0.0;
+
 uniform vec4 color_cloud : source_color = vec4(1.0);
 uniform vec4 color_shading : source_color = vec4(vec3(0.8), 1.0);
 uniform vec4 color_back : source_color = vec4(vec3(0.7), 1.0);
@@ -167,7 +169,7 @@ float cloud(vec2 str_uv, float time_scale) {
 }
 
 void fragment() {
-	vec2 str_uv = UV * uv_stretch;
+	vec2 str_uv = UV * uv_stretch + vec2(scroll, 0.0);
 	float cloud1 = cloud(str_uv, 1.0);
 	vec4 col;
 	

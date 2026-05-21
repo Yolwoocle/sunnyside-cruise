@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://taoox5uh010v"]
+
+[ext_resource type="Texture2D" uid="uid://bnaakhhat87w2" path="res://assets/bunny_hires.png" id="1_ufve3"]
+
+[node name="Node2D" type="Node2D" unique_id=1462696027]
+
+[node name="Polygons" type="Node2D" parent="." unique_id=1960830242]
+
+[node name="Body" type="Polygon2D" parent="Polygons" unique_id=1460414334]
+texture = ExtResource("1_ufve3")
+skeleton = NodePath("../../Skeleton2D")
+polygon = PackedVector2Array(239.36232, 106.89545, 273.74005, 118.779106, 271.61798, 154.8545, 255.49016, 191.77875, 233.84492, 213.42398, 193.52534, 213.84839, 157.44995, 188.80783, 165.51387, 158.67426, 187.58351, 131.08719, 212.6241, 112.41286)
+uv = PackedVector2Array(239.36232, 106.89545, 273.74005, 118.779106, 271.61798, 154.8545, 255.49016, 191.77875, 233.84492, 213.42398, 193.52534, 213.84839, 157.44995, 188.80783, 165.51387, 158.67426, 187.58351, 131.08719, 212.6241, 112.41286)
+
+[node name="LegFront" type="Polygon2D" parent="Polygons" unique_id=1626651376]
+position = Vector2(51, -31)
+texture = ExtResource("1_ufve3")
+skeleton = NodePath("../../Skeleton2D")
+polygon = PackedVector2Array(106.464874, 187.90434, 85.8309, 248.38326, 86.54242, 286.09366, 105.75336, 303.17004, 134.92554, 298.90094, 156.27106, 257.633, 173.34744, 217.78804, 152.00195, 176.52008, 129.29141, 238.68826, 122.351105, 255.88814, 141.36151, 208.21126, 112.39328, 281.83884, 113.69412, 219.74417, 150.5381, 230.36584)
+uv = PackedVector2Array(106.464874, 187.90434, 85.8309, 248.38326, 86.54242, 286.09366, 105.75336, 303.17004, 134.92554, 298.90094, 156.27106, 257.633, 173.34744, 217.78804, 152.00195, 176.52008, 129.29141, 238.68826, 122.351105, 255.88814, 141.36151, 208.21126, 112.39328, 281.83884, 113.69412, 219.74417, 150.5381, 230.36584)
+polygons = [PackedInt32Array(2, 11, 3), PackedInt32Array(11, 4, 3), PackedInt32Array(9, 2, 1), PackedInt32Array(9, 11, 2), PackedInt32Array(9, 4, 11), PackedInt32Array(9, 5, 4), PackedInt32Array(9, 8, 5), PackedInt32Array(9, 1, 8), PackedInt32Array(10, 7, 0), PackedInt32Array(10, 7, 6), PackedInt32Array(1, 12, 8), PackedInt32Array(8, 13, 5), PackedInt32Array(13, 6, 5), PackedInt32Array(13, 10, 6), PackedInt32Array(13, 8, 10), PackedInt32Array(12, 10, 8), PackedInt32Array(12, 0, 10), PackedInt32Array(12, 1, 0)]
+bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/LegFront", PackedFloat32Array(1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1), "Hip/LegFront/KneeFront", PackedFloat32Array(0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0), "Hip/LegFront/KneeFront/FeetFront", PackedFloat32Array(0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0), "Hip/LegBack", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/LegBack/KneeBack", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Hip/LegBack/KneeBack/FeetBack", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+internal_vertex_count = 6
+
+[node name="LegBack" type="Polygon2D" parent="Polygons" unique_id=2140905189]
+z_index = -1
+position = Vector2(-67, -18)
+texture = ExtResource("1_ufve3")
+skeleton = NodePath("../../Skeleton2D")
+polygon = PackedVector2Array(257.46652, 204.2784, 257.9083, 238.73846, 284.41605, 280.26727, 314.45816, 296.1719, 340.0823, 289.10318, 344.50027, 255.0849, 321.5269, 204.72018, 305.18045, 176.00348, 276.90552, 179.53784)
+uv = PackedVector2Array(257.46652, 204.2784, 257.9083, 238.73846, 284.41605, 280.26727, 314.45816, 296.1719, 340.0823, 289.10318, 344.50027, 255.0849, 321.5269, 204.72018, 305.18045, 176.00348, 276.90552, 179.53784)
+
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=99160921]
+
+[node name="Hip" type="Bone2D" parent="Skeleton2D" unique_id=660171707]
+position = Vector2(210, 188)
+rest = Transform2D(1, 0, 0, 1, 210, 188)
+
+[node name="LegFront" type="Bone2D" parent="Skeleton2D/Hip" unique_id=1848083508]
+position = Vector2(-23, -1)
+rest = Transform2D(1, 0, 0, 1, -23, -1)
+
+[node name="KneeFront" type="Bone2D" parent="Skeleton2D/Hip/LegFront" unique_id=312096292]
+position = Vector2(-12, 30)
+rest = Transform2D(1, 0, 0, 1, -12, 30)
+
+[node name="FeetFront" type="Bone2D" parent="Skeleton2D/Hip/LegFront/KneeFront" unique_id=1131305352]
+position = Vector2(-17, 34)
+rest = Transform2D(1, 0, 0, 1, -17, 34)
+
+[node name="LegBack" type="Bone2D" parent="Skeleton2D/Hip" unique_id=1700798392]
+position = Vector2(17, 5)
+rest = Transform2D(1, 0, 0, 1, 17, 5)
+
+[node name="KneeBack" type="Bone2D" parent="Skeleton2D/Hip/LegBack" unique_id=1057758918]
+position = Vector2(10, 30)
+rest = Transform2D(1, 0, 0, 1, 10, 30)
+
+[node name="FeetBack" type="Bone2D" parent="Skeleton2D/Hip/LegBack/KneeBack" unique_id=2085737318]
+position = Vector2(12, 32)
+rest = Transform2D(1, 0, 0, 1, 12, 32)

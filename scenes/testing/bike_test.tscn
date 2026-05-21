@@ -1,8 +1,16 @@
 [gd_scene format=3 uid="uid://cw6n4ymqu24r3"]
 
+[ext_resource type="Texture2D" uid="uid://bxht3d3dytx0l" path="res://icon.svg" id="2_a65vr"]
 [ext_resource type="PackedScene" uid="uid://dq2owi4hj8os7" path="res://scenes/bike.tscn" id="2_vy082"]
+[ext_resource type="Script" uid="uid://dxd4igtn0y2wa" path="res://scenes/testing/static_body_2d_5.gd" id="3_vy082"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jlxis"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vy082"]
+radius = 3.9403915
+height = 63.55307
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a65vr"]
 
 [node name="Node2D" type="Node2D" unique_id=1077892294]
 
@@ -37,3 +45,55 @@ shape = SubResource("WorldBoundaryShape2D_jlxis")
 [node name="Bike" parent="." unique_id=949065327 instance=ExtResource("2_vy082")]
 position = Vector2(171, 241)
 advance_force = 2000
+
+[node name="LegFront" type="RigidBody2D" parent="." unique_id=2041891162]
+visible = false
+position = Vector2(220, 81)
+rotation = 1.9764504
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LegFront" unique_id=311101829]
+position = Vector2(-0.023222566, -30.463083)
+shape = SubResource("CapsuleShape2D_vy082")
+
+[node name="Sprite2D" type="Sprite2D" parent="LegFront" unique_id=1685830305]
+position = Vector2(0, -30.999998)
+scale = Vector2(0.03124997, 0.48437497)
+texture = ExtResource("2_a65vr")
+
+[node name="LegFront2" type="RigidBody2D" parent="." unique_id=526021739]
+visible = false
+position = Vector2(271, 103)
+rotation = 1.9764504
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LegFront2" unique_id=1650885817]
+position = Vector2(-0.023222566, -30.463083)
+shape = SubResource("CapsuleShape2D_vy082")
+
+[node name="Sprite2D" type="Sprite2D" parent="LegFront2" unique_id=1949995721]
+position = Vector2(0, -30.999998)
+scale = Vector2(0.03124997, 0.48437497)
+texture = ExtResource("2_a65vr")
+
+[node name="StaticBody2D5" type="AnimatableBody2D" parent="." unique_id=1215795598]
+visible = false
+position = Vector2(220, 81)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("3_vy082")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D5" unique_id=235920381]
+shape = SubResource("CircleShape2D_a65vr")
+
+[node name="PinJoint2D" type="PinJoint2D" parent="." unique_id=446369983]
+position = Vector2(220, 81)
+node_a = NodePath("../LegFront")
+node_b = NodePath("../StaticBody2D5")
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="." unique_id=1100414319]
+position = Vector2(274, 104)
+node_a = NodePath("../LegFront")
+node_b = NodePath("../LegFront2")
