@@ -9,7 +9,7 @@ func _ready() -> void:
 	seed = randi()
 	
 	var viewport_size = get_viewport_rect().size
-	for i in size:
+	for i in range(-1, size):
 		var chunk = grass_field_prefab.instantiate()
 		var x = viewport_size.x * i
 		chunk.terrain_seed = seed

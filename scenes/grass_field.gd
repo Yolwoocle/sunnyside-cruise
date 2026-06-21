@@ -28,16 +28,22 @@ extends Node2D
 @export var max_spawn_attempts: int = 10
 @export var polygon_bottom_padding: float = 32
 
-
+@onready var multi_mesh_instance_2d: MultiMeshInstance2D = $MultiMeshInstance2D
 @onready var spawn_curve: Path2D = $Path2D
 @onready var spawn_polygon: Polygon2D = $Polygon2D
 @onready var static_body: StaticBody2D = $StaticBody2D
 @onready var collision_polygon: CollisionPolygon2D = $StaticBody2D/CollisionPolygon2D
 
+@export_category("Decorations")
+@onready var min_butterflies: int = 0
+@onready var max_butterflies: int = 4
+@onready var butterfly_spawn_range: float = 60.0
+
 var _spawn_bounding_box: Rect2
 var _rng = RandomNumberGenerator.new()
 var _top_edge: Curve
 var _weight_sum: float = 0.0
+
 
 var _terrain_noise := FastNoiseLite.new() 
 
@@ -45,6 +51,12 @@ func _ready():
 	assert(spawn_polygon != null)
 	
 	generate()
+
+
+func _physics_process(delta: float) -> void:
+	var camera = get_viewport().get_camera_2d()
+	multi_mesh_instance_2d.position.x = fmod(camera.position.x + 1000.0, 1.0)
+
 
 func generate() -> void:
 	var multimesh = MultiMesh.new()
@@ -76,6 +88,7 @@ func generate() -> void:
 	shader_material.set_shader_parameter("variant_count", len(variant_information))
 	
 	generate_grass()
+	generate_butterflies()
 
 
 func _generate_polygon() -> PackedVector2Array:
@@ -207,7 +220,15 @@ func generate_grass():
 	for i in len(blade_positions):
 		var pos = floor(blade_positions[i])
 		_generate_blade(i, pos)
-#
-#func _input(event):
-	#if event.is_action_pressed("ui_accept"):
-		#generate()
+
+
+func generate_butterflies():
+	var n = randi_range(min_butterflies, max_butterflies)
+	for i in n:
+		var curve = spawn_curve.curve
+		var point = curve.sample_baked(randf() * curve.get_baked_length())
+		var offset = Vector2(0.0, -randf_range(0.0, butterfly_spawn_range))
+		var butterfly = preload("res://scenes/butterfly.tscn").instantiate()
+		butterfly.position = point + offset
+		add_child(butterfly)
+		print(butterfly.position)

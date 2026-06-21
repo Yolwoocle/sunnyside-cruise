@@ -18,7 +18,3 @@ func _physics_process(delta: float) -> void:
 	
 	var coll_shape_2 = $LegFront/CollisionShape2D.shape as CapsuleShape2D
 	leg.set_point_position(2, $KneeFront.global_transform * (Vector2.DOWN * coll_shape_2.height * 0.5))
-	
-	print(leg.get_point_position(0).distance_to(leg.get_point_position(1)))
-	print(leg.get_point_position(1).distance_to(leg.get_point_position(2)))
-	print("---")

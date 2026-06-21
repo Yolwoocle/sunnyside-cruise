@@ -3,11 +3,15 @@
 [ext_resource type="Shader" uid="uid://b33n3c3ts8b7q" path="res://scenes/water.gdshader" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://df1kywp84318e" path="res://scenes/main.gd" id="1_tipki"]
 [ext_resource type="Texture2D" uid="uid://c8lfwithmjpbp" path="res://assets/sunnyside_cruise_transp.png" id="2_0xm2m"]
+[ext_resource type="AudioStream" uid="uid://bkuh20vlw4kah" path="res://assets/ambiance.ogg" id="2_85g3d"]
 [ext_resource type="Shader" uid="uid://yrrho3flfa6x" path="res://scenes/clouds.gdshader" id="2_h2yge"]
 [ext_resource type="Shader" uid="uid://bi1bbm71cyjnu" path="res://scenes/iris.gdshader" id="3_1bvp3"]
+[ext_resource type="AudioStream" uid="uid://ctbn76obff68h" path="res://assets/music_main.mp3" id="3_ya4ey"]
 [ext_resource type="Script" uid="uid://bwm5wc7wqs7cl" path="res://scenes/grass_fields.gd" id="6_tipki"]
+[ext_resource type="FontFile" uid="uid://bm6vp3fkyvk12" path="res://assets/font.ttf" id="7_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://dq2owi4hj8os7" path="res://scenes/bike.tscn" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://bx64j4nkk1lo8" path="res://scenes/camera_2d.gd" id="8_tipki"]
+[ext_resource type="Script" uid="uid://dxrmc4qhxnqpw" path="res://scenes/iris.gd" id="10_choun"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0xm2m"]
 shader = ExtResource("1_ig7tw")
@@ -68,6 +72,13 @@ shader_parameter/viewport_size = Vector2(480, 270)
 shader_parameter/radius = 0.0
 shader_parameter/color = Color(0.07529581, 0.119265474, 0.14576113, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_q467a"]
+font = ExtResource("7_eb6dy")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
+font = ExtResource("7_eb6dy")
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tefeu"]
 distance = 8.0
 
@@ -103,6 +114,57 @@ offset_right = 40.0
 offset_bottom = 23.0
 label_settings = SubResource("LabelSettings_tipki")
 
+[node name="Iris" type="ColorRect" parent="Camera2D" unique_id=2012503930]
+z_index = 100
+material = SubResource("ShaderMaterial_lquwl")
+custom_minimum_size = Vector2(480, 270)
+offset_right = 480.0
+offset_bottom = 270.0
+script = ExtResource("10_choun")
+
+[node name="TitleText" type="VBoxContainer" parent="Camera2D/Iris" unique_id=564672689]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -25.0
+offset_right = 62.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Camera2D/Iris/TitleText" unique_id=1716374394]
+layout_mode = 2
+text = "Sunnyside Cruise"
+label_settings = SubResource("LabelSettings_q467a")
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Camera2D/Iris/TitleText" unique_id=989640076]
+layout_mode = 2
+text = "An interactive demo by Léo Bernard"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="MusicCredit" type="Label" parent="Camera2D/Iris/TitleText" unique_id=725739719]
+layout_mode = 2
+text = "Music by T-SQUARE"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="AmbiencePlayer" type="AudioStreamPlayer2D" parent="Camera2D" unique_id=1515860284]
+stream = ExtResource("2_85g3d")
+volume_db = -3.0
+autoplay = true
+playback_type = 1
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="Camera2D" unique_id=19805221]
+stream = ExtResource("3_ya4ey")
+playback_type = 1
+
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1212673968]
 visible = false
 custom_minimum_size = Vector2(480, 270)
@@ -117,14 +179,6 @@ advance_force = 400
 
 [node name="GrassFields" type="Node2D" parent="." unique_id=777197843]
 script = ExtResource("6_tipki")
-
-[node name="Iris" type="ColorRect" parent="." unique_id=2012503930]
-material = SubResource("ShaderMaterial_lquwl")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=1247342191]
 position = Vector2(333, 360)

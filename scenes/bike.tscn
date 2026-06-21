@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://ct0dwk5gqrq3t" path="res://scenes/bike_body.gd" id="4_o7eds"]
 [ext_resource type="Texture2D" uid="uid://cmgl0rh02tl3u" path="res://assets/bunny_back.png" id="5_4lfrf"]
 [ext_resource type="Texture2D" uid="uid://b17vr5l22vek6" path="res://assets/pedal_arm.png" id="6_4lfrf"]
+[ext_resource type="Texture2D" uid="uid://bs8ubh5lu88ai" path="res://assets/bunny_head.png" id="6_irgsv"]
 [ext_resource type="Script" uid="uid://dogfjv372d0s4" path="res://scenes/pedal.gd" id="6_yvj5b"]
 [ext_resource type="Texture2D" uid="uid://2m2unjv45uyt" path="res://assets/pedal_head.png" id="8_7nrme"]
 
@@ -220,15 +221,25 @@ position = Vector2(0, -7)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_juvdb")
 
-[node name="BunnyFront" type="Sprite2D" parent="BikeBody" unique_id=590992418]
-position = Vector2(-3, -29.000002)
+[node name="BunnyHead" type="Sprite2D" parent="BikeBody" unique_id=590992418]
+z_index = 2
+position = Vector2(0, -29.000002)
+texture = ExtResource("6_irgsv")
+offset = Vector2(-4, 0)
+
+[node name="BunnyHeadMarker" type="Marker2D" parent="BikeBody" unique_id=604818810]
+z_index = 1
+position = Vector2(0, -29.000002)
+
+[node name="BunnyBody" type="Sprite2D" parent="BikeBody" unique_id=517249496]
+position = Vector2(-3.0000002, -28.000002)
 rotation = -0.12217305
+scale = Vector2(0.26395357, 0.26395357)
 texture = ExtResource("4_bqlqk")
 
 [node name="BunnyBack" type="Sprite2D" parent="BikeBody" unique_id=1929388778]
-visible = false
 z_index = -1
-position = Vector2(-3.8600311, -31.826298)
+position = Vector2(-2, -28)
 rotation = -0.12217305
 texture = ExtResource("5_4lfrf")
 

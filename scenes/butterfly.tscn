@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://bag7pt0nxqcfm"]
+
+[ext_resource type="Texture2D" uid="uid://ovluf6lm01qo" path="res://assets/butterfly.png" id="1_4ki4n"]
+[ext_resource type="Texture2D" uid="uid://0433yht0gmat" path="res://assets/butterfly_pink.png" id="2_o654m"]
+[ext_resource type="Script" uid="uid://bfh2dpp34rhn8" path="res://scenes/butterfly.gd" id="2_tq3rt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tq3rt"]
+atlas = ExtResource("1_4ki4n")
+region = Rect2(0, 0, 6, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o654m"]
+atlas = ExtResource("1_4ki4n")
+region = Rect2(6, 0, 6, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yym88"]
+atlas = ExtResource("1_4ki4n")
+region = Rect2(12, 0, 6, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42pi4"]
+atlas = ExtResource("1_4ki4n")
+region = Rect2(18, 0, 6, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6q6t"]
+atlas = ExtResource("2_o654m")
+region = Rect2(0, 0, 6, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpr2g"]
+atlas = ExtResource("2_o654m")
+region = Rect2(6, 0, 6, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1oym5"]
+atlas = ExtResource("2_o654m")
+region = Rect2(12, 0, 6, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwlwe"]
+atlas = ExtResource("2_o654m")
+region = Rect2(18, 0, 6, 7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tq3rt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o654m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yym88")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_42pi4")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h6q6t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpr2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1oym5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lwlwe")
+}],
+"loop": 1,
+"name": &"default_pink",
+"speed": 5.0
+}]
+
+[node name="Butterfly" type="AnimatedSprite2D" unique_id=1054957050]
+z_index = 5
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+animation = &"default_pink"
+script = ExtResource("2_tq3rt")

@@ -80,6 +80,7 @@ color = Color(0.5686275, 0.8, 0.4, 1)
 curve = SubResource("Curve2D_6hef4")
 
 [node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="." unique_id=155994956]
+z_index = 10
 material = SubResource("ShaderMaterial_6hef4")
 multimesh = SubResource("MultiMesh_32qfs")
 texture = ExtResource("1_upwcp")
