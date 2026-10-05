@@ -1,6 +1,6 @@
 extends ColorRect
 
-@onready var title_text: VBoxContainer = $TitleText
+@onready var title_text = $TitleText
 
 func _ready():
 	material.set_shader_parameter("radius", 0.0)

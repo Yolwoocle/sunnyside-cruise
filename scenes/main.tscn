@@ -7,11 +7,17 @@
 [ext_resource type="Shader" uid="uid://yrrho3flfa6x" path="res://scenes/clouds.gdshader" id="2_h2yge"]
 [ext_resource type="Shader" uid="uid://bi1bbm71cyjnu" path="res://scenes/iris.gdshader" id="3_1bvp3"]
 [ext_resource type="AudioStream" uid="uid://ctbn76obff68h" path="res://assets/music_main.mp3" id="3_ya4ey"]
+[ext_resource type="Script" uid="uid://ckt3us1kmajav" path="res://scenes/background_layer.gd" id="4_trceg"]
 [ext_resource type="Script" uid="uid://bwm5wc7wqs7cl" path="res://scenes/grass_fields.gd" id="6_tipki"]
 [ext_resource type="FontFile" uid="uid://bm6vp3fkyvk12" path="res://assets/font.ttf" id="7_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://dq2owi4hj8os7" path="res://scenes/bike.tscn" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://bx64j4nkk1lo8" path="res://scenes/camera_2d.gd" id="8_tipki"]
 [ext_resource type="Script" uid="uid://dxrmc4qhxnqpw" path="res://scenes/iris.gd" id="10_choun"]
+[ext_resource type="Script" uid="uid://bhu1frss30u47" path="res://scenes/pause_layer.gd" id="14_a8y0u"]
+[ext_resource type="Texture2D" uid="uid://d54jetsbvm1g" path="res://assets/ui_slider_grabber.png" id="15_muem4"]
+[ext_resource type="Texture2D" uid="uid://dce54vdj52m2m" path="res://assets/ui_slider_bg.png" id="16_dp3eg"]
+[ext_resource type="Texture2D" uid="uid://bun82fv6uya8v" path="res://assets/ui_icon_sfx.png" id="17_0ld40"]
+[ext_resource type="Texture2D" uid="uid://cf3w6qr1jwec0" path="res://assets/ui_icon_music.png" id="18_dp3eg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0xm2m"]
 shader = ExtResource("1_ig7tw")
@@ -62,15 +68,22 @@ shader_parameter/worley_scroll_time_scale = 0.045
 shader_parameter/wave_time_scale = 0.004
 shader_parameter/time_offset = 100.0
 
+[sub_resource type="Curve" id="Curve_eb6dy"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 1, Vector2(0.4877301, 0), 0.0, 1.952096, 1, 1, Vector2(1, 1), 1.952096, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tefeu"]
+distance = 8.0
+
 [sub_resource type="LabelSettings" id="LabelSettings_tipki"]
 font_size = 10
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lquwl"]
 shader = ExtResource("3_1bvp3")
-shader_parameter/pos = Vector2(96.53, 151.595)
+shader_parameter/pos = Vector2(90, 147)
 shader_parameter/viewport_size = Vector2(480, 270)
 shader_parameter/radius = 0.0
-shader_parameter/color = Color(0.07529581, 0.119265474, 0.14576113, 1)
+shader_parameter/color = Color(0.07450981, 0.11764706, 0.14509805, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_q467a"]
 font = ExtResource("7_eb6dy")
@@ -79,17 +92,42 @@ font_size = 32
 [sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
 font = ExtResource("7_eb6dy")
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tefeu"]
-distance = 8.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8851d"]
 
-[node name="Main" type="Node2D" unique_id=564196575]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w54dg"]
+texture = ExtResource("16_dp3eg")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+
+[sub_resource type="Theme" id="Theme_sm5ja"]
+VSlider/icons/grabber = ExtResource("15_muem4")
+VSlider/icons/grabber_highlight = ExtResource("15_muem4")
+VSlider/styles/slider = SubResource("StyleBoxTexture_w54dg")
+
+[node name="Main" type="Node" unique_id=1380247769]
 script = ExtResource("1_tipki")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=532694051]
-anchor_mode = 0
-script = ExtResource("8_tipki")
+[node name="AmbiencePlayer" type="AudioStreamPlayer" parent="." unique_id=937089602]
+stream = ExtResource("2_85g3d")
+volume_db = -3.0
+autoplay = true
+bus = &"Ambiance"
+playback_type = 1
 
-[node name="Water" type="ColorRect" parent="Camera2D" unique_id=2022183565]
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1115614594]
+process_mode = 3
+stream = ExtResource("3_ya4ey")
+volume_db = -6.0
+bus = &"Music"
+playback_type = 1
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=1176813121 node_paths=PackedStringArray("camera")]
+script = ExtResource("4_trceg")
+camera = NodePath("../GameLayer/Camera2D")
+
+[node name="Water" type="ColorRect" parent="BackgroundLayer" unique_id=2022183565]
 z_index = -20
 material = SubResource("ShaderMaterial_0xm2m")
 custom_minimum_size = Vector2(480, 22.97)
@@ -97,75 +135,27 @@ offset_top = 129.0
 offset_right = 480.0
 offset_bottom = 270.0
 
-[node name="Clouds" type="ColorRect" parent="Camera2D" unique_id=1641650351]
+[node name="Clouds" type="ColorRect" parent="BackgroundLayer" unique_id=1641650351]
 z_index = -20
 material = SubResource("ShaderMaterial_1bvp3")
 custom_minimum_size = Vector2(480, 40)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 480.0
-offset_bottom = 129.0
+offset_bottom = -141.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Camera2D" unique_id=1710734963]
-offset_right = 40.0
-offset_bottom = 23.0
-label_settings = SubResource("LabelSettings_tipki")
+[node name="GameLayer" type="CanvasLayer" parent="." unique_id=90465420]
+follow_viewport_enabled = true
 
-[node name="Iris" type="ColorRect" parent="Camera2D" unique_id=2012503930]
-z_index = 100
-material = SubResource("ShaderMaterial_lquwl")
-custom_minimum_size = Vector2(480, 270)
-offset_right = 480.0
-offset_bottom = 270.0
-script = ExtResource("10_choun")
+[node name="Camera2D" type="Camera2D" parent="GameLayer" unique_id=532694051 node_paths=PackedStringArray("bike")]
+anchor_mode = 0
+limit_enabled = false
+script = ExtResource("8_tipki")
+bike = NodePath("../Bike")
 
-[node name="TitleText" type="VBoxContainer" parent="Camera2D/Iris" unique_id=564672689]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -62.0
-offset_top = -25.0
-offset_right = 62.0
-offset_bottom = 25.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 12
-
-[node name="Title" type="Label" parent="Camera2D/Iris/TitleText" unique_id=1716374394]
-layout_mode = 2
-text = "Sunnyside Cruise"
-label_settings = SubResource("LabelSettings_q467a")
-horizontal_alignment = 1
-
-[node name="Subtitle" type="Label" parent="Camera2D/Iris/TitleText" unique_id=989640076]
-layout_mode = 2
-text = "An interactive demo by Léo Bernard"
-label_settings = SubResource("LabelSettings_g4v7s")
-horizontal_alignment = 1
-
-[node name="MusicCredit" type="Label" parent="Camera2D/Iris/TitleText" unique_id=725739719]
-layout_mode = 2
-text = "Music by T-SQUARE"
-label_settings = SubResource("LabelSettings_g4v7s")
-horizontal_alignment = 1
-
-[node name="AmbiencePlayer" type="AudioStreamPlayer2D" parent="Camera2D" unique_id=1515860284]
-stream = ExtResource("2_85g3d")
-volume_db = -3.0
-autoplay = true
-playback_type = 1
-
-[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="Camera2D" unique_id=19805221]
-stream = ExtResource("3_ya4ey")
-playback_type = 1
-
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1212673968]
+[node name="TextureRect" type="TextureRect" parent="GameLayer" unique_id=1212673968]
 visible = false
 custom_minimum_size = Vector2(480, 270)
 offset_right = 480.0
@@ -173,23 +163,218 @@ offset_bottom = 270.0
 texture = ExtResource("2_0xm2m")
 expand_mode = 2
 
-[node name="Bike" parent="." unique_id=949065327 instance=ExtResource("7_o6xl0")]
-position = Vector2(20, 22)
-advance_force = 400
+[node name="Bike" parent="GameLayer" unique_id=949065327 instance=ExtResource("7_o6xl0")]
+unique_name_in_owner = true
+position = Vector2(74, 146)
 
-[node name="GrassFields" type="Node2D" parent="." unique_id=777197843]
+[node name="GrassFields" type="Node2D" parent="GameLayer" unique_id=777197843]
 script = ExtResource("6_tipki")
+first_chunk_randomness_curve = SubResource("Curve_eb6dy")
 
-[node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=1247342191]
-position = Vector2(333, 360)
+[node name="BottomLimit" type="StaticBody2D" parent="GameLayer" unique_id=1247342191]
+position = Vector2(240, 284)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4" unique_id=1123136681]
-position = Vector2(-91, -70)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameLayer/BottomLimit" unique_id=1123136681]
 shape = SubResource("WorldBoundaryShape2D_tefeu")
 
-[node name="StaticBody2D5" type="StaticBody2D" parent="." unique_id=82860279]
-position = Vector2(-9, 161)
+[node name="LeftLimit" type="StaticBody2D" parent="GameLayer" unique_id=82860279]
+position = Vector2(-113, 161)
 rotation = 1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5" unique_id=2039328548]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameLayer/LeftLimit" unique_id=2039328548]
 shape = SubResource("WorldBoundaryShape2D_tefeu")
+
+[node name="RightLimit" type="StaticBody2D" parent="GameLayer" unique_id=943634680]
+position = Vector2(9120, 135)
+rotation = -1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameLayer/RightLimit" unique_id=2091079836]
+shape = SubResource("WorldBoundaryShape2D_tefeu")
+
+[node name="UICanvasLayer" type="CanvasLayer" parent="." unique_id=1383111321]
+visible = false
+
+[node name="FPSLabel" type="Label" parent="UICanvasLayer" unique_id=1710734963]
+unique_name_in_owner = true
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_tipki")
+
+[node name="Iris" type="ColorRect" parent="UICanvasLayer" unique_id=2012503930]
+unique_name_in_owner = true
+z_index = 100
+material = SubResource("ShaderMaterial_lquwl")
+custom_minimum_size = Vector2(480, 270)
+offset_right = 480.0
+offset_bottom = 270.0
+script = ExtResource("10_choun")
+
+[node name="TitleText" type="Control" parent="UICanvasLayer/Iris" unique_id=2093280482]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleText" type="VBoxContainer" parent="UICanvasLayer/Iris/TitleText" unique_id=564672689]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = -44.0
+offset_right = 136.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="UICanvasLayer/Iris/TitleText/TitleText" unique_id=1716374394]
+layout_mode = 2
+text = "Sunnyside Cruise"
+label_settings = SubResource("LabelSettings_q467a")
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="UICanvasLayer/Iris/TitleText/TitleText" unique_id=989640076]
+layout_mode = 2
+text = "An interactive demo by Yolwoocle"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="MusicCredit" type="Label" parent="UICanvasLayer/Iris/TitleText/TitleText" unique_id=725739719]
+layout_mode = 2
+text = "Music by T-SQUARE"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="PressAnyKey" type="Label" parent="UICanvasLayer/Iris/TitleText" unique_id=350166019]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -136.0
+offset_top = -26.0
+offset_right = 136.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press Space"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+
+[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=1100132408]
+process_mode = 3
+script = ExtResource("14_a8y0u")
+
+[node name="PauseMenu" type="Control" parent="PauseLayer" unique_id=1546233841]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PauseLayer/PauseMenu" unique_id=295651606]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0765, 0.12182499, 0.15, 0.8509804)
+
+[node name="Control" type="MarginContainer" parent="PauseLayer/PauseMenu" unique_id=1699931474]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_right = 13
+
+[node name="Buttons" type="VBoxContainer" parent="PauseLayer/PauseMenu/Control" unique_id=419293615]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ResumeButton" type="Button" parent="PauseLayer/PauseMenu/Control/Buttons" unique_id=913521821]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../../HBoxContainer/VBoxContainer2/SliderMusic")
+focus_neighbor_top = NodePath("../QuitButton")
+theme_override_colors/font_color = Color(0.5176471, 0.54901963, 0.58431375, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_eb6dy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8851d")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_8851d")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8851d")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8851d")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8851d")
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="PauseLayer/PauseMenu/Control/Buttons" unique_id=712644394]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_left = NodePath("../../HBoxContainer/VBoxContainer2/SliderMusic")
+focus_neighbor_right = NodePath("../../HBoxContainer/VBoxContainer/SliderSFX")
+focus_neighbor_bottom = NodePath("../ResumeButton")
+theme_override_colors/font_color = Color(0.5176471, 0.54901963, 0.58431375, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_eb6dy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8851d")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_8851d")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8851d")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8851d")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8851d")
+text = "Quit"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseLayer/PauseMenu/Control" unique_id=1907029188]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme = SubResource("Theme_sm5ja")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseLayer/PauseMenu/Control/HBoxContainer" unique_id=1105952392]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TextureRect" type="TextureRect" parent="PauseLayer/PauseMenu/Control/HBoxContainer/VBoxContainer" unique_id=831266559]
+layout_mode = 2
+texture = ExtResource("17_0ld40")
+
+[node name="SliderSFX" type="VSlider" parent="PauseLayer/PauseMenu/Control/HBoxContainer/VBoxContainer" unique_id=1636437841]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+focus_neighbor_left = NodePath("../../../Buttons/ResumeButton")
+focus_neighbor_right = NodePath("../../VBoxContainer2/SliderMusic")
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PauseLayer/PauseMenu/Control/HBoxContainer" unique_id=2085095340]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TextureRect" type="TextureRect" parent="PauseLayer/PauseMenu/Control/HBoxContainer/VBoxContainer2" unique_id=919864085]
+layout_mode = 2
+texture = ExtResource("18_dp3eg")
+
+[node name="SliderMusic" type="VSlider" parent="PauseLayer/PauseMenu/Control/HBoxContainer/VBoxContainer2" unique_id=770764549]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+focus_neighbor_right = NodePath("../../../Buttons/ResumeButton")
+max_value = 1.0
+step = 0.05
+value = 1.0

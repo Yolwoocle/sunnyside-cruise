@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://y06eyjbcidy4" path="res://assets/wheel.png" id="2_fdhfo"]
 [ext_resource type="Script" uid="uid://bpiwwqpspfi1w" path="res://scenes/front_leg.gd" id="2_irgsv"]
 [ext_resource type="Texture2D" uid="uid://bosy7xu50nt7f" path="res://assets/bike_body.png" id="3_juvdb"]
+[ext_resource type="AudioStream" uid="uid://dri1ltuk3ocoh" path="res://assets/tire_roll.ogg" id="4_8851d"]
 [ext_resource type="Texture2D" uid="uid://bhhgjosa0onhg" path="res://assets/bunny.png" id="4_bqlqk"]
 [ext_resource type="Script" uid="uid://ct0dwk5gqrq3t" path="res://scenes/bike_body.gd" id="4_o7eds"]
 [ext_resource type="Texture2D" uid="uid://cmgl0rh02tl3u" path="res://assets/bunny_back.png" id="5_4lfrf"]
@@ -11,6 +12,16 @@
 [ext_resource type="Texture2D" uid="uid://bs8ubh5lu88ai" path="res://assets/bunny_head.png" id="6_irgsv"]
 [ext_resource type="Script" uid="uid://dogfjv372d0s4" path="res://scenes/pedal.gd" id="6_yvj5b"]
 [ext_resource type="Texture2D" uid="uid://2m2unjv45uyt" path="res://assets/pedal_head.png" id="8_7nrme"]
+[ext_resource type="Script" uid="uid://b57cel0txew7j" path="res://scenes/bell_particles.gd" id="12_a0es8"]
+[ext_resource type="AudioStream" uid="uid://vule5ja8f5wu" path="res://assets/bell_01.ogg" id="12_glnsx"]
+[ext_resource type="AudioStream" uid="uid://thlhymg2tqdh" path="res://assets/bell_02.ogg" id="13_a0es8"]
+[ext_resource type="AudioStream" uid="uid://bkpx5ttnpo5q7" path="res://assets/bell_03.ogg" id="14_8851d"]
+[ext_resource type="AudioStream" uid="uid://b0bltrkjpqsgf" path="res://assets/bell_04.ogg" id="15_eltme"]
+[ext_resource type="AudioStream" uid="uid://bcps7wcjcjobc" path="res://assets/bell_05.ogg" id="16_0ynpw"]
+[ext_resource type="AudioStream" uid="uid://sjmrn2nao7e6" path="res://assets/bell_06.ogg" id="17_61422"]
+[ext_resource type="AudioStream" uid="uid://b3p212gjfj4ox" path="res://assets/bell_07.ogg" id="18_w52fh"]
+[ext_resource type="AudioStream" uid="uid://btykp1rfotr5n" path="res://assets/bell_08.ogg" id="19_68bdh"]
+[ext_resource type="AudioStream" uid="uid://g7hylb66bp1b" path="res://assets/bell_09.ogg" id="20_f8cd2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_irgsv"]
 size = Vector2(2, 2)
@@ -29,16 +40,31 @@ radius = 13.038404
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bqlqk"]
 size = Vector2(39, 4)
 
+[sub_resource type="Curve" id="Curve_g4v7s"]
+_limits = [0.0, 5.0, 0.0, 1.0]
+_data = [Vector2(0, 2.5816991), 0.0, -2.5816991, 0, 1, Vector2(1, 0), -2.5816991, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_irgsv"]
+streams_count = 9
+stream_0/stream = ExtResource("12_glnsx")
+stream_1/stream = ExtResource("13_a0es8")
+stream_2/stream = ExtResource("14_8851d")
+stream_3/stream = ExtResource("15_eltme")
+stream_4/stream = ExtResource("16_0ynpw")
+stream_5/stream = ExtResource("17_61422")
+stream_6/stream = ExtResource("18_w52fh")
+stream_7/stream = ExtResource("19_68bdh")
+stream_8/stream = ExtResource("20_f8cd2")
+
 [node name="Bike" type="Node2D" unique_id=949065327]
 script = ExtResource("1_fdhfo")
 
 [node name="WheelBackJoint" type="PinJoint2D" parent="." unique_id=1514180788]
-visible = false
 node_a = NodePath("../BackWheel")
 node_b = NodePath("../BikeBody")
 
 [node name="WheelFrontJoint" type="PinJoint2D" parent="." unique_id=1291538765]
-visible = false
 position = Vector2(35, 0)
 node_a = NodePath("../FrontWheel")
 node_b = NodePath("../BikeBody")
@@ -191,6 +217,11 @@ texture = ExtResource("2_fdhfo")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BackWheel" unique_id=1557353027]
 shape = SubResource("CircleShape2D_fdhfo")
 
+[node name="WheelSound" type="AudioStreamPlayer2D" parent="BackWheel" unique_id=197909601]
+position = Vector2(18, 0)
+stream = ExtResource("4_8851d")
+bus = &"Ambiance"
+
 [node name="FrontWheel" type="RigidBody2D" parent="." unique_id=1922521260]
 position = Vector2(35, 0)
 collision_layer = 2
@@ -226,6 +257,7 @@ z_index = 2
 position = Vector2(0, -29.000002)
 texture = ExtResource("6_irgsv")
 offset = Vector2(-4, 0)
+hframes = 2
 
 [node name="BunnyHeadMarker" type="Marker2D" parent="BikeBody" unique_id=604818810]
 z_index = 1
@@ -278,3 +310,79 @@ z_index = -2
 position = Vector2(-6, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("8_7nrme")
+
+[node name="BellParticles" type="Node2D" parent="BikeBody" unique_id=992579497]
+unique_name_in_owner = true
+position = Vector2(24, -17)
+rotation = 0.48600537
+script = ExtResource("12_a0es8")
+
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="BikeBody/BellParticles" unique_id=1165415025]
+emitting = false
+amount = 1
+lifetime = 0.56
+one_shot = true
+speed_scale = 2.15
+explosiveness = 1.0
+local_coords = true
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.71
+initial_velocity_max = 30.71
+radial_accel_min = -68.33
+radial_accel_max = -68.33
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+split_scale = true
+scale_curve_x = SubResource("Curve_g4v7s")
+scale_curve_y = null
+
+[node name="CPUParticles2D5" type="CPUParticles2D" parent="BikeBody/BellParticles" unique_id=305500098]
+position = Vector2(-3, -6)
+rotation = -0.667114
+emitting = false
+amount = 1
+lifetime = 0.56
+one_shot = true
+speed_scale = 2.15
+explosiveness = 1.0
+local_coords = true
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.71
+initial_velocity_max = 30.71
+radial_accel_min = -68.33
+radial_accel_max = -68.33
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+split_scale = true
+scale_curve_x = SubResource("Curve_g4v7s")
+scale_curve_y = null
+
+[node name="CPUParticles2D4" type="CPUParticles2D" parent="BikeBody/BellParticles" unique_id=708065024]
+position = Vector2(-3.0935504, 5.2373605)
+rotation = 0.8383646
+emitting = false
+amount = 1
+lifetime = 0.56
+one_shot = true
+speed_scale = 2.15
+explosiveness = 1.0
+local_coords = true
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.71
+initial_velocity_max = 30.71
+radial_accel_min = -68.33
+radial_accel_max = -68.33
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+split_scale = true
+scale_curve_x = SubResource("Curve_g4v7s")
+scale_curve_y = null
+
+[node name="BellSound" type="AudioStreamPlayer2D" parent="BikeBody" unique_id=1174491792]
+unique_name_in_owner = true
+position = Vector2(16, -21)
+stream = SubResource("AudioStreamRandomizer_irgsv")
+bus = &"Ambiance"

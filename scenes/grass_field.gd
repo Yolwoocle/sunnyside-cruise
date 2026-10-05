@@ -1,3 +1,4 @@
+class_name GrassFieldChunk
 extends Node2D
 
 @onready var multimesh_instance: MultiMeshInstance2D = $MultiMeshInstance2D
@@ -11,6 +12,11 @@ extends Node2D
 @export var terrain_height_scale = 200.0
 @export var terrain_offset = 0.0
 @export var terrain_seed = -1
+
+# A value of 1 means terrain height should be fully random, and 0 means it 
+# should be randomness_curve_base_height.
+@export var randomness_curve: Curve = null 
+@export var randomness_curve_base_height: float = 0.0
 
 @export_category("Grass params")
 @export var grass_count := 6000
@@ -99,7 +105,11 @@ func _generate_polygon() -> PackedVector2Array:
 	for ix in range(0, size.x + terrain_step, terrain_step):
 		var x = ix
 		var noise = _terrain_noise.get_noise_1d((terrain_offset + x) * terrain_noise_scale)
-		var point = Vector2(x, terrain_base_height + noise * terrain_height_scale)
+		var y = terrain_base_height + noise * terrain_height_scale
+		if randomness_curve:
+			var randomness_fac = randomness_curve.sample(clamp(float(x) / float(size.x), 0.0, 1.0))
+			y = lerp(randomness_curve_base_height, y, randomness_fac)
+		var point = Vector2(x, y)
 		polygon.append(point)
 		spawn_curve.curve.add_point(point)
 	
@@ -231,4 +241,3 @@ func generate_butterflies():
 		var butterfly = preload("res://scenes/butterfly.tscn").instantiate()
 		butterfly.position = point + offset
 		add_child(butterfly)
-		print(butterfly.position)
