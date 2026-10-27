@@ -23,12 +23,15 @@
 [ext_resource type="AudioStream" uid="uid://btykp1rfotr5n" path="res://assets/bell_08.ogg" id="19_68bdh"]
 [ext_resource type="AudioStream" uid="uid://g7hylb66bp1b" path="res://assets/bell_09.ogg" id="20_f8cd2"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_irgsv"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8851d"]
 size = Vector2(2, 2)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d1jr7"]
 radius = 1.0
 height = 10.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_irgsv"]
+size = Vector2(2, 2)
 
 [sub_resource type="Curve" id="Curve_o7eds"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.6254122), -0.8985057, 0.0, 0, 0]
@@ -69,36 +72,37 @@ position = Vector2(35, 0)
 node_a = NodePath("../FrontWheel")
 node_b = NodePath("../BikeBody")
 
-[node name="FrontLeg" type="Node2D" parent="." unique_id=806946141]
+[node name="FrontLeg" type="Node2D" parent="." unique_id=806946141 node_paths=PackedStringArray("leg_base")]
 script = ExtResource("2_irgsv")
 leg_length = 4
+leg_base = NodePath("FrontLegBase")
 
 [node name="HipFrontJoint" type="PinJoint2D" parent="FrontLeg" unique_id=1666051617]
-position = Vector2(58, -20)
+position = Vector2(8, -14)
 node_a = NodePath("../LegFront")
 node_b = NodePath("../FrontLegBase")
 
 [node name="LegFrontJoint" type="PinJoint2D" parent="FrontLeg" unique_id=1568450020]
-position = Vector2(68, -20)
+position = Vector2(18, -14)
 node_a = NodePath("../LegFront")
 node_b = NodePath("../KneeFront")
 
 [node name="FeetFrontJoint" type="PinJoint2D" parent="FrontLeg" unique_id=1508885261]
-position = Vector2(68, -10)
+position = Vector2(18, -4)
 node_a = NodePath("../PedalHeadFront")
 node_b = NodePath("../KneeFront")
 
 [node name="FrontLegBase" type="AnimatableBody2D" parent="FrontLeg" unique_id=420093699]
-position = Vector2(57, -20)
+position = Vector2(7, -14)
 collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="FrontLeg/FrontLegBase" unique_id=982204169]
 z_index = 3
-shape = SubResource("RectangleShape2D_irgsv")
+shape = SubResource("RectangleShape2D_8851d")
 
 [node name="LegFront" type="RigidBody2D" parent="FrontLeg" unique_id=840553832]
-position = Vector2(63, -20)
+position = Vector2(13, -14)
 rotation = 1.5707964
 collision_layer = 0
 collision_mask = 0
@@ -109,7 +113,7 @@ scale = Vector2(1, 0.99999994)
 shape = SubResource("CapsuleShape2D_d1jr7")
 
 [node name="KneeFront" type="RigidBody2D" parent="FrontLeg" unique_id=1363550154]
-position = Vector2(68, -15)
+position = Vector2(18, -9)
 collision_layer = 0
 collision_mask = 0
 
@@ -119,7 +123,7 @@ scale = Vector2(1, 0.99999994)
 shape = SubResource("CapsuleShape2D_d1jr7")
 
 [node name="PedalHeadFront" type="AnimatableBody2D" parent="FrontLeg" unique_id=750572494]
-position = Vector2(68, -9)
+position = Vector2(18, -3)
 collision_layer = 0
 collision_mask = 0
 
@@ -129,7 +133,7 @@ shape = SubResource("RectangleShape2D_irgsv")
 
 [node name="LegFrontLine2D" type="Line2D" parent="FrontLeg" unique_id=1713241758]
 z_index = 1
-position = Vector2(90, -5)
+position = Vector2(40, 1)
 points = PackedVector2Array(-6, -17, 2, -17, 2, -9)
 width = 8.0
 width_curve = SubResource("Curve_o7eds")
@@ -138,36 +142,37 @@ joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="BackLeg" type="Node2D" parent="." unique_id=1696615451]
+[node name="BackLeg" type="Node2D" parent="." unique_id=1696615451 node_paths=PackedStringArray("leg_base")]
 script = ExtResource("2_irgsv")
 leg_length = 4
+leg_base = NodePath("BackLegBase")
 
 [node name="HipFrontJoint" type="PinJoint2D" parent="BackLeg" unique_id=1544479989]
-position = Vector2(57, -47)
+position = Vector2(14, -14)
 node_a = NodePath("../LegFront")
-node_b = NodePath("../FrontLegBase")
+node_b = NodePath("../BackLegBase")
 
 [node name="LegFrontJoint" type="PinJoint2D" parent="BackLeg" unique_id=1158721330]
-position = Vector2(67, -47)
+position = Vector2(24, -14)
 node_a = NodePath("../LegFront")
 node_b = NodePath("../KneeFront")
 
 [node name="FeetFrontJoint" type="PinJoint2D" parent="BackLeg" unique_id=809219106]
-position = Vector2(67, -37)
+position = Vector2(24, -4)
 node_a = NodePath("../PedalHeadFront")
 node_b = NodePath("../KneeFront")
 
-[node name="FrontLegBase" type="AnimatableBody2D" parent="BackLeg" unique_id=811603509]
-position = Vector2(56, -47)
+[node name="BackLegBase" type="AnimatableBody2D" parent="BackLeg" unique_id=811603509]
+position = Vector2(13, -14)
 collision_layer = 0
 collision_mask = 0
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="BackLeg/FrontLegBase" unique_id=1219854302]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BackLeg/BackLegBase" unique_id=1219854302]
 z_index = 3
 shape = SubResource("RectangleShape2D_irgsv")
 
 [node name="LegFront" type="RigidBody2D" parent="BackLeg" unique_id=1879261549]
-position = Vector2(62, -47)
+position = Vector2(19, -14)
 rotation = 1.5707964
 collision_layer = 0
 collision_mask = 0
@@ -178,7 +183,7 @@ scale = Vector2(1, 0.99999994)
 shape = SubResource("CapsuleShape2D_d1jr7")
 
 [node name="KneeFront" type="RigidBody2D" parent="BackLeg" unique_id=109338438]
-position = Vector2(67, -42)
+position = Vector2(24, -9)
 collision_layer = 0
 collision_mask = 0
 
@@ -188,7 +193,7 @@ scale = Vector2(1, 0.99999994)
 shape = SubResource("CapsuleShape2D_d1jr7")
 
 [node name="PedalHeadFront" type="AnimatableBody2D" parent="BackLeg" unique_id=203316758]
-position = Vector2(67, -36)
+position = Vector2(24, -3)
 collision_layer = 0
 collision_mask = 0
 
@@ -198,7 +203,7 @@ shape = SubResource("RectangleShape2D_irgsv")
 
 [node name="LegFrontLine2D" type="Line2D" parent="BackLeg" unique_id=248923262]
 z_index = -2
-position = Vector2(89, -32)
+position = Vector2(46, 1)
 points = PackedVector2Array(-6, -17, 2, -17, 2, -9)
 width = 8.0
 width_curve = SubResource("Curve_o7eds")
@@ -239,7 +244,7 @@ collision_layer = 0
 mass = 0.1
 script = ExtResource("4_o7eds")
 front_leg_base = NodePath("../FrontLeg/FrontLegBase")
-back_leg_base = NodePath("../BackLeg/FrontLegBase")
+back_leg_base = NodePath("../BackLeg/BackLegBase")
 
 [node name="LegBaseFrontMarker" type="Marker2D" parent="BikeBody" unique_id=467126143]
 position = Vector2(-11, -14)

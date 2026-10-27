@@ -36,7 +36,7 @@ func set_paused(value: bool):
 		return
 	
 	paused = value
-	if not paused:
+	if paused:
 		get_tree().paused = true
 		AudioServer.set_bus_effect_enabled(AudioServer.get_bus_index("Music"), 0, true)
 		
