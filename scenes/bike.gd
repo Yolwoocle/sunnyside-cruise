@@ -1,7 +1,7 @@
 class_name Bike
 extends Node2D
 
-@export var default_advance_force = 300
+@export var default_advance_force = 5000
 
 @onready var back_wheel = $BackWheel
 @onready var body = $BikeBody
@@ -11,7 +11,7 @@ extends Node2D
 @onready var wheel_sound: AudioStreamPlayer2D = $BackWheel/WheelSound
 @onready var head: Sprite2D = $BikeBody/BunnyHead
 
-var advance_force = 0.0
+@onready var advance_force = default_advance_force
 
 var previous_wheel_rotation = 0.0
 var is_static = false
@@ -26,6 +26,7 @@ const blink_duration = 0.1
 func _ready() -> void:
 	wheel_sound.volume_linear = 0.0
 	wheel_sound.play()
+
 
 func _physics_process(delta: float) -> void:
 	if is_static:
@@ -56,8 +57,7 @@ func _physics_process(delta: float) -> void:
 
 
 func move(force: float) -> void:
-	var body_rot = body.rotation
-	back_wheel.apply_force(Vector2.RIGHT.rotated(body_rot) * force)
+	back_wheel.apply_torque(force)
 
 
 func _input(event: InputEvent) -> void:

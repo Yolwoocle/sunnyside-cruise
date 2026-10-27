@@ -1,5 +1,3 @@
-- [ ] Pause menu
-- [ ] Tire SFX
 - [ ] Infinite grass generation
 - [ ] Improve controls on uphills
 
@@ -8,6 +6,8 @@
 - [ ] Back grass at top of hill
 
 # Done
+- [x] Pause menu
+- [x] Tire SFX
 - [x] Scrolling 
 - [x] Rabbit 
 - [x] Butterflies 
