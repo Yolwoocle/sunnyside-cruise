@@ -270,6 +270,7 @@ horizontal_alignment = 1
 
 [node name="PauseLayer" type="CanvasLayer" parent="." unique_id=1100132408]
 process_mode = 3
+visible = false
 script = ExtResource("14_a8y0u")
 
 [node name="PauseMenu" type="Control" parent="PauseLayer" unique_id=1546233841]
