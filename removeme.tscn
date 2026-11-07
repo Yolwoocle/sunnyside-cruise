@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bbvbcb4ypyol1"]
+
+[ext_resource type="Shader" uid="uid://dfrhd6jgrihgy" path="res://new_shader.gdshader" id="1_cxfk1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g4v7s"]
+shader = ExtResource("1_cxfk1")
+shader_parameter/palette = PackedColorArray(1, 1, 1, 1, 1, 0.00999999, 0.00999999, 1, 0, 0.14700016, 0.63, 1, 0, 1, 1, 1)
+shader_parameter/highlight_color = Color(0, 0, 0, 1)
+shader_parameter/scroll = 0.0
+shader_parameter/scroll_speed = 0.2
+shader_parameter/uv_scale = Vector2(1, 1)
+shader_parameter/min_uv_perspective = 1.0
+shader_parameter/max_uv_perspective = 2.0
+shader_parameter/wave_scale = 0.6
+shader_parameter/noise_octaves = 3
+shader_parameter/noise_scale = 10.0
+shader_parameter/noise_frequency = 3.0
+shader_parameter/noise_value = 0.0
+shader_parameter/wave_time_scale = 0.1
+shader_parameter/highlight_noise_octaves = 3
+shader_parameter/highlight_noise_scale = 10.0
+shader_parameter/highlight_noise_frequency = 3.0
+shader_parameter/highlight_noise_value = 0.0
+shader_parameter/highlight_threshold = 0.8
+shader_parameter/highlight_time_scale = 0.2
+
+[node name="Node2D" type="Node2D" unique_id=1023964440]
+
+[node name="TextureRect" type="ColorRect" parent="." unique_id=1455764662]
+material = SubResource("ShaderMaterial_g4v7s")
+offset_right = 332.0
+offset_bottom = 332.0
